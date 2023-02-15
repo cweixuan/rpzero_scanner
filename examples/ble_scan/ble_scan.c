@@ -150,7 +150,7 @@ int main(int argc, const char *argv[]) {
 		sscanf(argv[1], "%d", &num_tries);
 		printf("Scanning for %d times",num_tries);
 		adapter_name = argv[2];
-	}
+	} else
 	{
 		printf("%s [<bluetooth-adapter>]\n", argv[0]);
 		return 1;
