@@ -4,6 +4,7 @@
  * Copyright (c) 2016-2022, Olivier Martin <olivier@labapart.org>
  */
 
+#include <stdlib.h>
 #include "gattlib_internal.h"
 
 

@@ -4,6 +4,7 @@
  * Copyright (c) 2016-2021, Olivier Martin <olivier@labapart.org>
  */
 
+#include <stdlib.h>
 #include "gattlib_internal.h"
 
 #if BLUEZ_VERSION < BLUEZ_VERSIONS(5, 40)
