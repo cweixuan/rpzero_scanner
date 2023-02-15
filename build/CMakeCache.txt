@@ -14,9 +14,6 @@
 # EXTERNAL cache entries
 ########################
 
-//No help, variable specified on the command line.
-BLUEZ_VERSION:UNINITIALIZED=5.43
-
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/ar
 
@@ -161,9 +158,6 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 //Path to a program.
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
-//No help, variable specified on the command line.
-CMAKE_PREFIX_PATH:UNINITIALIZED=Python
-
 //Value Computed by CMake
 CMAKE_PROJECT_NAME:STATIC=gattlib
 
@@ -250,7 +244,7 @@ GATTLIB_BUILD_DOCS:BOOL=OFF
 GATTLIB_BUILD_EXAMPLES:BOOL=ON
 
 //Build gattlib with D-Bus support on Bluez version < v5.42
-GATTLIB_FORCE_DBUS:BOOL=FALSE
+GATTLIB_FORCE_DBUS:BOOL=OFF
 
 //Define logging backend: syslog, printf (default: syslog)
 GATTLIB_LOG_BACKEND:STRING=syslog
@@ -260,16 +254,13 @@ GATTLIB_LOG_BACKEND:STRING=syslog
 GATTLIB_LOG_LEVEL:STRING=3
 
 //Build GattLib Python Interface
-GATTLIB_PYTHON_INTERFACE:BOOL=ON
+GATTLIB_PYTHON_INTERFACE:BOOL=OFF
 
 //Build GattLib as a shared library
 GATTLIB_SHARED_LIB:BOOL=ON
 
 //pkg-config executable
 PKG_CONFIG_EXECUTABLE:FILEPATH=/usr/bin/pkg-config
-
-//The directory containing a CMake configuration file for Python.
-Python_DIR:PATH=Python_DIR-NOTFOUND
 
 //Value Computed by CMake
 gattlib_BINARY_DIR:STATIC=/home/pi/Documents/rpzero_scanner/build
@@ -314,6 +305,7 @@ BLUEZ_STATIC_LIBS:INTERNAL=
 BLUEZ_STATIC_LIBS_L:INTERNAL=
 BLUEZ_STATIC_LIBS_OTHER:INTERNAL=
 BLUEZ_STATIC_LIBS_PATHS:INTERNAL=
+BLUEZ_VERSION:INTERNAL=5.43
 BLUEZ_bluez_INCLUDEDIR:INTERNAL=
 BLUEZ_bluez_LIBDIR:INTERNAL=
 BLUEZ_bluez_PREFIX:INTERNAL=
@@ -491,26 +483,26 @@ DOXYGEN_DOT_EXECUTABLE-ADVANCED:INTERNAL=1
 DOXYGEN_EXECUTABLE-ADVANCED:INTERNAL=1
 //Details about finding PkgConfig
 FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig:INTERNAL=[/usr/bin/pkg-config][v0.29()]
-GATTLIB_CFLAGS:INTERNAL=-I/usr/include/glib-2.0;-I/usr/lib/arm-linux-gnueabihf/glib-2.0/include
+GATTLIB_CFLAGS:INTERNAL=-I/include;-I/usr/include/glib-2.0;-I/usr/lib/arm-linux-gnueabihf/glib-2.0/include
 GATTLIB_CFLAGS_I:INTERNAL=
 GATTLIB_CFLAGS_OTHER:INTERNAL=
 GATTLIB_FOUND:INTERNAL=1
-GATTLIB_INCLUDEDIR:INTERNAL=/usr/include
-GATTLIB_INCLUDE_DIRS:INTERNAL=/usr/include/glib-2.0;/usr/lib/arm-linux-gnueabihf/glib-2.0/include
+GATTLIB_INCLUDEDIR:INTERNAL=/include
+GATTLIB_INCLUDE_DIRS:INTERNAL=/include;/usr/include/glib-2.0;/usr/lib/arm-linux-gnueabihf/glib-2.0/include
 GATTLIB_LDFLAGS:INTERNAL=-lgattlib;-lglib-2.0
 GATTLIB_LDFLAGS_OTHER:INTERNAL=
-GATTLIB_LIBDIR:INTERNAL=/usr/lib
+GATTLIB_LIBDIR:INTERNAL=/lib
 GATTLIB_LIBRARIES:INTERNAL=gattlib;glib-2.0
 GATTLIB_LIBRARY_DIRS:INTERNAL=
 GATTLIB_LIBS:INTERNAL=
 GATTLIB_LIBS_L:INTERNAL=
 GATTLIB_LIBS_OTHER:INTERNAL=
 GATTLIB_LIBS_PATHS:INTERNAL=
-GATTLIB_PREFIX:INTERNAL=/usr
-GATTLIB_STATIC_CFLAGS:INTERNAL=-I/usr/include/glib-2.0;-I/usr/lib/arm-linux-gnueabihf/glib-2.0/include
+GATTLIB_PREFIX:INTERNAL=
+GATTLIB_STATIC_CFLAGS:INTERNAL=-I/include;-I/usr/include/glib-2.0;-I/usr/lib/arm-linux-gnueabihf/glib-2.0/include
 GATTLIB_STATIC_CFLAGS_I:INTERNAL=
 GATTLIB_STATIC_CFLAGS_OTHER:INTERNAL=
-GATTLIB_STATIC_INCLUDE_DIRS:INTERNAL=/usr/include/glib-2.0;/usr/lib/arm-linux-gnueabihf/glib-2.0/include
+GATTLIB_STATIC_INCLUDE_DIRS:INTERNAL=/include;/usr/include/glib-2.0;/usr/lib/arm-linux-gnueabihf/glib-2.0/include
 GATTLIB_STATIC_LDFLAGS:INTERNAL=-lgattlib;-lglib-2.0;-pthread;-lpcre;-pthread
 GATTLIB_STATIC_LDFLAGS_OTHER:INTERNAL=-pthread
 GATTLIB_STATIC_LIBDIR:INTERNAL=
@@ -636,5 +628,5 @@ __pkg_config_checked_GATTLIB:INTERNAL=1
 __pkg_config_checked_GIO_UNIX:INTERNAL=1
 __pkg_config_checked_GLIB:INTERNAL=1
 __pkg_config_checked_PCRE:INTERNAL=1
-prefix_result:INTERNAL=/usr/lib
+prefix_result:INTERNAL=/usr/lib/arm-linux-gnueabihf
 
