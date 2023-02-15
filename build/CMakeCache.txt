@@ -14,6 +14,9 @@
 # EXTERNAL cache entries
 ########################
 
+//No help, variable specified on the command line.
+BLUEZ_VERSION:UNINITIALIZED=5.43
+
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/ar
 
@@ -247,7 +250,7 @@ GATTLIB_BUILD_DOCS:BOOL=OFF
 GATTLIB_BUILD_EXAMPLES:BOOL=ON
 
 //Build gattlib with D-Bus support on Bluez version < v5.42
-GATTLIB_FORCE_DBUS:BOOL=OFF
+GATTLIB_FORCE_DBUS:BOOL=FALSE
 
 //Define logging backend: syslog, printf (default: syslog)
 GATTLIB_LOG_BACKEND:STRING=syslog
@@ -311,7 +314,6 @@ BLUEZ_STATIC_LIBS:INTERNAL=
 BLUEZ_STATIC_LIBS_L:INTERNAL=
 BLUEZ_STATIC_LIBS_OTHER:INTERNAL=
 BLUEZ_STATIC_LIBS_PATHS:INTERNAL=
-BLUEZ_VERSION:INTERNAL=5.43
 BLUEZ_bluez_INCLUDEDIR:INTERNAL=
 BLUEZ_bluez_LIBDIR:INTERNAL=
 BLUEZ_bluez_PREFIX:INTERNAL=

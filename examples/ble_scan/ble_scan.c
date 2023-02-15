@@ -26,6 +26,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <sys/queue.h>
+#include <unistd.h>
+
 
 #ifdef GATTLIB_LOG_BACKEND_SYSLOG
 #include <syslog.h>
@@ -114,25 +116,25 @@ static void ble_discovered_device(void *adapter, const char* addr, const char* n
 	int16_t rssi = 0;
  	gattlib_get_rssi_from_mac(adapter, addr, &rssi);
 	if (name) {
-		printf("Discovered %s - '%s' - '%d'\n", addr, name, rssi);
+		printf("Discovered %s - '%s' | RSSI: %d\n", addr, name, rssi);
 	} else {
-		printf("Discovered %s\n", addr);
+		printf("Discovered %s | RSSI: %d\n", addr,rssi);
 	}
 
-	// connection = malloc(sizeof(struct connection_t));
-	// if (connection == NULL) {
-	// 	GATTLIB_LOG(GATTLIB_ERROR, "Failt to allocate connection.");
-	// 	return;
-	// }
-	// connection->addr = strdup(addr);
+	//connection = malloc(sizeof(struct connection_t));
+	//if (connection == NULL) {
+	//	GATTLIB_LOG(GATTLIB_ERROR, "Failt to allocate connection.");
+	//	return;
+	//}
+	//connection->addr = strdup(addr);
 
-	// ret = pthread_create(&connection->thread, NULL,	ble_connect_device, connection);
-	// if (ret != 0) {
-	// 	GATTLIB_LOG(GATTLIB_ERROR, "Failt to create BLE connection thread.");
-	// 	free(connection);
-	// 	return;
-	// }
-	// LIST_INSERT_HEAD(&g_ble_connections, connection, entries);
+	//ret = pthread_create(&connection->thread, NULL,	ble_connect_device, connection);
+	//if (ret != 0) {
+	//	GATTLIB_LOG(GATTLIB_ERROR, "Failt to create BLE connection thread.");
+	//	free(connection);
+	//	return;
+	//}
+	//LIST_INSERT_HEAD(&g_ble_connections, connection, entries);
 }
 
 int main(int argc, const char *argv[]) {
@@ -161,21 +163,21 @@ int main(int argc, const char *argv[]) {
 	setlogmask(LOG_UPTO(LOG_INFO));
 #endif
 	LIST_INIT(&g_ble_connections);
-
-	for (uint8_t i = 1; i <= num_tries; i ++){
-		printf("scan %d\n",i);
 	ret = gattlib_adapter_open(adapter_name, &adapter);
 	if (ret) {
 		GATTLIB_LOG(GATTLIB_ERROR, "Failed to open adapter.");
 		return 1;
 	}
+
+	for (uint8_t i = 1; i <= num_tries; i ++){
+		printf("scan %d\n",i);
 		pthread_mutex_lock(&g_mutex);
 		ret = gattlib_adapter_scan_enable(adapter, ble_discovered_device, BLE_SCAN_TIMEOUT, NULL /* user_data */);
 		if (ret) {
 			GATTLIB_LOG(GATTLIB_ERROR, "Failed to scan.");
 			goto EXIT;
 		}
-
+	sleep(5);
 	gattlib_adapter_scan_disable(adapter);
 	pthread_mutex_unlock(&g_mutex);
 	}

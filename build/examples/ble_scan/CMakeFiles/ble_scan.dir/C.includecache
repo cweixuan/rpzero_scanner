@@ -27,6 +27,8 @@ stdlib.h
 -
 sys/queue.h
 -
+unistd.h
+-
 syslog.h
 -
 gattlib.h
