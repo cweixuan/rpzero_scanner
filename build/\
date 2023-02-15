@@ -149,7 +149,7 @@ int main(int argc, const char *argv[]) {
 	} else if (argc == 3) {
 		sscanf(argv[1], "%d", &num_tries);
 		printf("Scanning for %d times",num_tries);
-		adapter_name = argv[2];
+		adapter_name = argv[2]
 	}
 	{
 		printf("%s [<bluetooth-adapter>]\n", argv[0]);
