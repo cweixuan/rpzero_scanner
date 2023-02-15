@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/gattlib.h
+stdint.h
+-
+bluetooth/bluetooth.h
+-
+bluetooth/sdp.h
+-
+bluetooth/sdp_lib.h
+-
+
+/home/pi/Documents/rpzero_scanner/examples/ble_scan/ble_scan.c
+pthread.h
+-
+stdio.h
+-
+stdint.h
+-
+stdlib.h
+-
+sys/queue.h
+-
+syslog.h
+-
+gattlib.h
+/home/pi/Documents/rpzero_scanner/examples/ble_scan/gattlib.h
+

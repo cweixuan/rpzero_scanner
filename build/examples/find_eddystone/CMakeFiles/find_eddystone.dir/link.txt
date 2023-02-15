@@ -1,0 +1,1 @@
+/usr/bin/cc   -Wall -g   CMakeFiles/find_eddystone.dir/find_eddystone.c.o  -o find_eddystone  -L/home/pi/Documents/rpzero_scanner/build/dbus -Wl,-rpath,/home/pi/Documents/rpzero_scanner/build/dbus -rdynamic ../../dbus/libgattlib.so -lglib-2.0 -lgattlib -lglib-2.0 -lpcre -lpthread -lgio-2.0 -lgobject-2.0 -lglib-2.0 

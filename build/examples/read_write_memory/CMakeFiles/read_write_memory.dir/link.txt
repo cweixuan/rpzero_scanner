@@ -1,0 +1,1 @@
+/usr/bin/cc   -Wall -g   CMakeFiles/read_write_memory.dir/read_write_memory.c.o  -o read_write_memory  -L/home/pi/Documents/rpzero_scanner/build/dbus -Wl,-rpath,/home/pi/Documents/rpzero_scanner/build/dbus -rdynamic ../../dbus/libgattlib.so -lglib-2.0 -lgattlib -lglib-2.0 -lglib-2.0 -lpcre -lpthread -lgio-2.0 -lgobject-2.0 -lglib-2.0 
