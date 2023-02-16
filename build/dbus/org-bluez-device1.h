@@ -60,6 +60,8 @@ struct _OrgBluezDevice1Iface
 
   const gchar * (*get_address) (OrgBluezDevice1 *object);
 
+  const gchar * (*get_address_type) (OrgBluezDevice1 *object);
+
   const gchar * (*get_alias) (OrgBluezDevice1 *object);
 
   guint16  (*get_appearance) (OrgBluezDevice1 *object);
@@ -253,6 +255,10 @@ gboolean org_bluez_device1_call_cancel_pairing_sync (
 const gchar *org_bluez_device1_get_address (OrgBluezDevice1 *object);
 gchar *org_bluez_device1_dup_address (OrgBluezDevice1 *object);
 void org_bluez_device1_set_address (OrgBluezDevice1 *object, const gchar *value);
+
+const gchar *org_bluez_device1_get_address_type (OrgBluezDevice1 *object);
+gchar *org_bluez_device1_dup_address_type (OrgBluezDevice1 *object);
+void org_bluez_device1_set_address_type (OrgBluezDevice1 *object, const gchar *value);
 
 const gchar *org_bluez_device1_get_name (OrgBluezDevice1 *object);
 gchar *org_bluez_device1_dup_name (OrgBluezDevice1 *object);

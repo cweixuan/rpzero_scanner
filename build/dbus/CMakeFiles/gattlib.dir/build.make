@@ -57,29 +57,29 @@ include dbus/CMakeFiles/gattlib.dir/progress.make
 # Include the compile flags for this target's objects.
 include dbus/CMakeFiles/gattlib.dir/flags.make
 
-dbus/org-bluez-adaptater1.c: ../dbus/dbus-bluez-v5.40/org.bluez.Adapter1.xml
+dbus/org-bluez-adaptater1.c: ../dbus/dbus-bluez-v5.48/org.bluez.Adapter1.xml
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/pi/Documents/rpzero_scanner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generate D-Bus 'org.bluez.Adapter1.xml'"
-	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.Adapter1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-adaptater1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.40/org.bluez.Adapter1.xml
+	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.Adapter1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-adaptater1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.48/org.bluez.Adapter1.xml
 
-dbus/org-bluez-device1.c: ../dbus/dbus-bluez-v5.40/org.bluez.Device1.xml
+dbus/org-bluez-device1.c: ../dbus/dbus-bluez-v5.48/org.bluez.Device1.xml
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/pi/Documents/rpzero_scanner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generate D-Bus 'org.bluez.Device1.xml'"
-	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.Device1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-device1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.40/org.bluez.Device1.xml
+	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.Device1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-device1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.48/org.bluez.Device1.xml
 
-dbus/org-bluez-gattcharacteristic1.c: ../dbus/dbus-bluez-v5.40/org.bluez.GattCharacteristic1.xml
+dbus/org-bluez-gattcharacteristic1.c: ../dbus/dbus-bluez-v5.48/org.bluez.GattCharacteristic1.xml
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/pi/Documents/rpzero_scanner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generate D-Bus 'org.bluez.GattCharacteristic1.xml'"
-	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.Characteristic1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-gattcharacteristic1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.40/org.bluez.GattCharacteristic1.xml
+	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.Characteristic1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-gattcharacteristic1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.48/org.bluez.GattCharacteristic1.xml
 
-dbus/org-bluez-gattdescriptor1.c: ../dbus/dbus-bluez-v5.40/org.bluez.GattDescriptor1.xml
+dbus/org-bluez-gattdescriptor1.c: ../dbus/dbus-bluez-v5.48/org.bluez.GattDescriptor1.xml
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/pi/Documents/rpzero_scanner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Generate D-Bus 'org.bluez.GattDescriptor1.xml'"
-	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.Descriptor1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-gattdescriptor1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.40/org.bluez.GattDescriptor1.xml
+	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.Descriptor1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-gattdescriptor1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.48/org.bluez.GattDescriptor1.xml
 
-dbus/org-bluez-gattservice1.c: ../dbus/dbus-bluez-v5.40/org.bluez.GattService1.xml
+dbus/org-bluez-gattservice1.c: ../dbus/dbus-bluez-v5.48/org.bluez.GattService1.xml
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/pi/Documents/rpzero_scanner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Generate D-Bus 'org.bluez.GattService1.xml'"
-	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.GattService1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-gattservice1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.40/org.bluez.GattService1.xml
+	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.GattService1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-gattservice1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.48/org.bluez.GattService1.xml
 
-dbus/org-bluez-battery1.c: ../dbus/dbus-bluez-v5.40/org.bluez.Battery1.xml
+dbus/org-bluez-battery1.c: ../dbus/dbus-bluez-v5.48/org.bluez.Battery1.xml
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/pi/Documents/rpzero_scanner/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Generate D-Bus 'org.bluez.Battery1.xml'"
-	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.Battery1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-battery1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.40/org.bluez.Battery1.xml
+	cd /home/pi/Documents/rpzero_scanner/build/dbus && gdbus-codegen --interface-prefix org.bluez.Battery1. --generate-c-code /home/pi/Documents/rpzero_scanner/build/dbus/org-bluez-battery1 /home/pi/Documents/rpzero_scanner/dbus/dbus-bluez-v5.48/org.bluez.Battery1.xml
 
 dbus/CMakeFiles/gattlib.dir/gattlib.c.o: dbus/CMakeFiles/gattlib.dir/flags.make
 dbus/CMakeFiles/gattlib.dir/gattlib.c.o: ../dbus/gattlib.c

@@ -187,10 +187,14 @@ gattlib_internal.h
 /home/pi/Documents/rpzero_scanner/dbus/gattlib_internal.h
 
 /home/pi/Documents/rpzero_scanner/dbus/gattlib_adapter.c
+stdlib.h
+-
 gattlib_internal.h
 /home/pi/Documents/rpzero_scanner/dbus/gattlib_internal.h
 
 /home/pi/Documents/rpzero_scanner/dbus/gattlib_advertisement.c
+stdlib.h
+-
 gattlib_internal.h
 /home/pi/Documents/rpzero_scanner/dbus/gattlib_internal.h
 

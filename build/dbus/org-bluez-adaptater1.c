@@ -271,6 +271,19 @@ static const _ExtendedGDBusPropertyInfo _org_bluez_adapter1_property_info_addres
   FALSE
 };
 
+static const _ExtendedGDBusPropertyInfo _org_bluez_adapter1_property_info_address_type =
+{
+  {
+    -1,
+    (gchar *) "AddressType",
+    (gchar *) "s",
+    G_DBUS_PROPERTY_INFO_FLAGS_READABLE,
+    NULL
+  },
+  "address-type",
+  FALSE
+};
+
 static const _ExtendedGDBusPropertyInfo _org_bluez_adapter1_property_info_name =
 {
   {
@@ -417,6 +430,7 @@ static const _ExtendedGDBusPropertyInfo _org_bluez_adapter1_property_info_modali
 static const _ExtendedGDBusPropertyInfo * const _org_bluez_adapter1_property_info_pointers[] =
 {
   &_org_bluez_adapter1_property_info_address,
+  &_org_bluez_adapter1_property_info_address_type,
   &_org_bluez_adapter1_property_info_name,
   &_org_bluez_adapter1_property_info_alias,
   &_org_bluez_adapter1_property_info_class,
@@ -472,6 +486,7 @@ guint
 org_bluez_adapter1_override_properties (GObjectClass *klass, guint property_id_begin)
 {
   g_object_class_override_property (klass, property_id_begin++, "address");
+  g_object_class_override_property (klass, property_id_begin++, "address-type");
   g_object_class_override_property (klass, property_id_begin++, "name");
   g_object_class_override_property (klass, property_id_begin++, "alias");
   g_object_class_override_property (klass, property_id_begin++, "class");
@@ -502,6 +517,7 @@ org_bluez_adapter1_override_properties (GObjectClass *klass, guint property_id_b
  * @handle_start_discovery: Handler for the #OrgBluezAdapter1::handle-start-discovery signal.
  * @handle_stop_discovery: Handler for the #OrgBluezAdapter1::handle-stop-discovery signal.
  * @get_address: Getter for the #OrgBluezAdapter1:address property.
+ * @get_address_type: Getter for the #OrgBluezAdapter1:address-type property.
  * @get_alias: Getter for the #OrgBluezAdapter1:alias property.
  * @get_class: Getter for the #OrgBluezAdapter1:class property.
  * @get_discoverable: Getter for the #OrgBluezAdapter1:discoverable property.
@@ -624,6 +640,15 @@ org_bluez_adapter1_default_init (OrgBluezAdapter1Iface *iface)
    */
   g_object_interface_install_property (iface,
     g_param_spec_string ("address", "Address", "Address", NULL, G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+  /**
+   * OrgBluezAdapter1:address-type:
+   *
+   * Represents the D-Bus property <link linkend="gdbus-property-org-bluez-Adapter1.AddressType">"AddressType"</link>.
+   *
+   * Since the D-Bus property for this #GObject property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+   */
+  g_object_interface_install_property (iface,
+    g_param_spec_string ("address-type", "AddressType", "AddressType", NULL, G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
   /**
    * OrgBluezAdapter1:name:
    *
@@ -774,6 +799,57 @@ void
 org_bluez_adapter1_set_address (OrgBluezAdapter1 *object, const gchar *value)
 {
   g_object_set (G_OBJECT (object), "address", value, NULL);
+}
+
+/**
+ * org_bluez_adapter1_get_address_type: (skip)
+ * @object: A #OrgBluezAdapter1.
+ *
+ * Gets the value of the <link linkend="gdbus-property-org-bluez-Adapter1.AddressType">"AddressType"</link> D-Bus property.
+ *
+ * Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
+ *
+ * <warning>The returned value is only valid until the property changes so on the client-side it is only safe to use this function on the thread where @object was constructed. Use org_bluez_adapter1_dup_address_type() if on another thread.</warning>
+ *
+ * Returns: (transfer none): The property value or %NULL if the property is not set. Do not free the returned value, it belongs to @object.
+ */
+const gchar *
+org_bluez_adapter1_get_address_type (OrgBluezAdapter1 *object)
+{
+  return ORG_BLUEZ_ADAPTER1_GET_IFACE (object)->get_address_type (object);
+}
+
+/**
+ * org_bluez_adapter1_dup_address_type: (skip)
+ * @object: A #OrgBluezAdapter1.
+ *
+ * Gets a copy of the <link linkend="gdbus-property-org-bluez-Adapter1.AddressType">"AddressType"</link> D-Bus property.
+ *
+ * Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
+ *
+ * Returns: (transfer full): The property value or %NULL if the property is not set. The returned value should be freed with g_free().
+ */
+gchar *
+org_bluez_adapter1_dup_address_type (OrgBluezAdapter1 *object)
+{
+  gchar *value;
+  g_object_get (G_OBJECT (object), "address-type", &value, NULL);
+  return value;
+}
+
+/**
+ * org_bluez_adapter1_set_address_type: (skip)
+ * @object: A #OrgBluezAdapter1.
+ * @value: The value to set.
+ *
+ * Sets the <link linkend="gdbus-property-org-bluez-Adapter1.AddressType">"AddressType"</link> D-Bus property to @value.
+ *
+ * Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
+ */
+void
+org_bluez_adapter1_set_address_type (OrgBluezAdapter1 *object, const gchar *value)
+{
+  g_object_set (G_OBJECT (object), "address-type", value, NULL);
 }
 
 /**
@@ -1697,7 +1773,7 @@ org_bluez_adapter1_proxy_get_property (GObject      *object,
 {
   const _ExtendedGDBusPropertyInfo *info;
   GVariant *variant;
-  g_assert (prop_id != 0 && prop_id - 1 < 12);
+  g_assert (prop_id != 0 && prop_id - 1 < 13);
   info = _org_bluez_adapter1_property_info_pointers[prop_id - 1];
   variant = g_dbus_proxy_get_cached_property (G_DBUS_PROXY (object), info->parent_struct.name);
   if (info->use_gvariant)
@@ -1744,7 +1820,7 @@ org_bluez_adapter1_proxy_set_property (GObject      *object,
 {
   const _ExtendedGDBusPropertyInfo *info;
   GVariant *variant;
-  g_assert (prop_id != 0 && prop_id - 1 < 12);
+  g_assert (prop_id != 0 && prop_id - 1 < 13);
   info = _org_bluez_adapter1_property_info_pointers[prop_id - 1];
   variant = g_dbus_gvalue_to_gvariant (value, G_VARIANT_TYPE (info->parent_struct.signature));
   g_dbus_proxy_call (G_DBUS_PROXY (object),
@@ -1833,6 +1909,21 @@ org_bluez_adapter1_proxy_get_address (OrgBluezAdapter1 *object)
   GVariant *variant;
   const gchar *value = NULL;
   variant = g_dbus_proxy_get_cached_property (G_DBUS_PROXY (proxy), "Address");
+  if (variant != NULL)
+    {
+      value = g_variant_get_string (variant, NULL);
+      g_variant_unref (variant);
+    }
+  return value;
+}
+
+static const gchar *
+org_bluez_adapter1_proxy_get_address_type (OrgBluezAdapter1 *object)
+{
+  OrgBluezAdapter1Proxy *proxy = ORG_BLUEZ_ADAPTER1_PROXY (object);
+  GVariant *variant;
+  const gchar *value = NULL;
+  variant = g_dbus_proxy_get_cached_property (G_DBUS_PROXY (proxy), "AddressType");
   if (variant != NULL)
     {
       value = g_variant_get_string (variant, NULL);
@@ -2048,6 +2139,7 @@ static void
 org_bluez_adapter1_proxy_iface_init (OrgBluezAdapter1Iface *iface)
 {
   iface->get_address = org_bluez_adapter1_proxy_get_address;
+  iface->get_address_type = org_bluez_adapter1_proxy_get_address_type;
   iface->get_name = org_bluez_adapter1_proxy_get_name;
   iface->get_alias = org_bluez_adapter1_proxy_get_alias;
   iface->get_class = org_bluez_adapter1_proxy_get_class;
@@ -2485,7 +2577,7 @@ org_bluez_adapter1_skeleton_finalize (GObject *object)
 {
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   guint n;
-  for (n = 0; n < 12; n++)
+  for (n = 0; n < 13; n++)
     g_value_unset (&skeleton->priv->properties[n]);
   g_free (skeleton->priv->properties);
   g_list_free_full (skeleton->priv->changed_properties, (GDestroyNotify) _changed_property_free);
@@ -2503,7 +2595,7 @@ org_bluez_adapter1_skeleton_get_property (GObject      *object,
   GParamSpec   *pspec G_GNUC_UNUSED)
 {
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
-  g_assert (prop_id != 0 && prop_id - 1 < 12);
+  g_assert (prop_id != 0 && prop_id - 1 < 13);
   g_mutex_lock (&skeleton->priv->lock);
   g_value_copy (&skeleton->priv->properties[prop_id - 1], value);
   g_mutex_unlock (&skeleton->priv->lock);
@@ -2621,7 +2713,7 @@ org_bluez_adapter1_skeleton_set_property (GObject      *object,
   GParamSpec   *pspec)
 {
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
-  g_assert (prop_id != 0 && prop_id - 1 < 12);
+  g_assert (prop_id != 0 && prop_id - 1 < 13);
   g_mutex_lock (&skeleton->priv->lock);
   g_object_freeze_notify (object);
   if (!_g_value_equal (value, &skeleton->priv->properties[prop_id - 1]))
@@ -2646,19 +2738,20 @@ org_bluez_adapter1_skeleton_init (OrgBluezAdapter1Skeleton *skeleton)
 
   g_mutex_init (&skeleton->priv->lock);
   skeleton->priv->context = g_main_context_ref_thread_default ();
-  skeleton->priv->properties = g_new0 (GValue, 12);
+  skeleton->priv->properties = g_new0 (GValue, 13);
   g_value_init (&skeleton->priv->properties[0], G_TYPE_STRING);
   g_value_init (&skeleton->priv->properties[1], G_TYPE_STRING);
   g_value_init (&skeleton->priv->properties[2], G_TYPE_STRING);
-  g_value_init (&skeleton->priv->properties[3], G_TYPE_UINT);
-  g_value_init (&skeleton->priv->properties[4], G_TYPE_BOOLEAN);
+  g_value_init (&skeleton->priv->properties[3], G_TYPE_STRING);
+  g_value_init (&skeleton->priv->properties[4], G_TYPE_UINT);
   g_value_init (&skeleton->priv->properties[5], G_TYPE_BOOLEAN);
-  g_value_init (&skeleton->priv->properties[6], G_TYPE_UINT);
-  g_value_init (&skeleton->priv->properties[7], G_TYPE_BOOLEAN);
-  g_value_init (&skeleton->priv->properties[8], G_TYPE_UINT);
-  g_value_init (&skeleton->priv->properties[9], G_TYPE_BOOLEAN);
-  g_value_init (&skeleton->priv->properties[10], G_TYPE_STRV);
-  g_value_init (&skeleton->priv->properties[11], G_TYPE_STRING);
+  g_value_init (&skeleton->priv->properties[6], G_TYPE_BOOLEAN);
+  g_value_init (&skeleton->priv->properties[7], G_TYPE_UINT);
+  g_value_init (&skeleton->priv->properties[8], G_TYPE_BOOLEAN);
+  g_value_init (&skeleton->priv->properties[9], G_TYPE_UINT);
+  g_value_init (&skeleton->priv->properties[10], G_TYPE_BOOLEAN);
+  g_value_init (&skeleton->priv->properties[11], G_TYPE_STRV);
+  g_value_init (&skeleton->priv->properties[12], G_TYPE_STRING);
 }
 
 static const gchar *
@@ -2673,7 +2766,7 @@ org_bluez_adapter1_skeleton_get_address (OrgBluezAdapter1 *object)
 }
 
 static const gchar *
-org_bluez_adapter1_skeleton_get_name (OrgBluezAdapter1 *object)
+org_bluez_adapter1_skeleton_get_address_type (OrgBluezAdapter1 *object)
 {
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   const gchar *value;
@@ -2684,12 +2777,23 @@ org_bluez_adapter1_skeleton_get_name (OrgBluezAdapter1 *object)
 }
 
 static const gchar *
-org_bluez_adapter1_skeleton_get_alias (OrgBluezAdapter1 *object)
+org_bluez_adapter1_skeleton_get_name (OrgBluezAdapter1 *object)
 {
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   const gchar *value;
   g_mutex_lock (&skeleton->priv->lock);
   value = g_value_get_string (&(skeleton->priv->properties[2]));
+  g_mutex_unlock (&skeleton->priv->lock);
+  return value;
+}
+
+static const gchar *
+org_bluez_adapter1_skeleton_get_alias (OrgBluezAdapter1 *object)
+{
+  OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
+  const gchar *value;
+  g_mutex_lock (&skeleton->priv->lock);
+  value = g_value_get_string (&(skeleton->priv->properties[3]));
   g_mutex_unlock (&skeleton->priv->lock);
   return value;
 }
@@ -2700,7 +2804,7 @@ org_bluez_adapter1_skeleton_get_class (OrgBluezAdapter1 *object)
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   guint value;
   g_mutex_lock (&skeleton->priv->lock);
-  value = g_value_get_uint (&(skeleton->priv->properties[3]));
+  value = g_value_get_uint (&(skeleton->priv->properties[4]));
   g_mutex_unlock (&skeleton->priv->lock);
   return value;
 }
@@ -2711,7 +2815,7 @@ org_bluez_adapter1_skeleton_get_powered (OrgBluezAdapter1 *object)
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   gboolean value;
   g_mutex_lock (&skeleton->priv->lock);
-  value = g_value_get_boolean (&(skeleton->priv->properties[4]));
+  value = g_value_get_boolean (&(skeleton->priv->properties[5]));
   g_mutex_unlock (&skeleton->priv->lock);
   return value;
 }
@@ -2722,7 +2826,7 @@ org_bluez_adapter1_skeleton_get_discoverable (OrgBluezAdapter1 *object)
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   gboolean value;
   g_mutex_lock (&skeleton->priv->lock);
-  value = g_value_get_boolean (&(skeleton->priv->properties[5]));
+  value = g_value_get_boolean (&(skeleton->priv->properties[6]));
   g_mutex_unlock (&skeleton->priv->lock);
   return value;
 }
@@ -2733,7 +2837,7 @@ org_bluez_adapter1_skeleton_get_discoverable_timeout (OrgBluezAdapter1 *object)
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   guint value;
   g_mutex_lock (&skeleton->priv->lock);
-  value = g_value_get_uint (&(skeleton->priv->properties[6]));
+  value = g_value_get_uint (&(skeleton->priv->properties[7]));
   g_mutex_unlock (&skeleton->priv->lock);
   return value;
 }
@@ -2744,7 +2848,7 @@ org_bluez_adapter1_skeleton_get_pairable (OrgBluezAdapter1 *object)
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   gboolean value;
   g_mutex_lock (&skeleton->priv->lock);
-  value = g_value_get_boolean (&(skeleton->priv->properties[7]));
+  value = g_value_get_boolean (&(skeleton->priv->properties[8]));
   g_mutex_unlock (&skeleton->priv->lock);
   return value;
 }
@@ -2755,7 +2859,7 @@ org_bluez_adapter1_skeleton_get_pairable_timeout (OrgBluezAdapter1 *object)
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   guint value;
   g_mutex_lock (&skeleton->priv->lock);
-  value = g_value_get_uint (&(skeleton->priv->properties[8]));
+  value = g_value_get_uint (&(skeleton->priv->properties[9]));
   g_mutex_unlock (&skeleton->priv->lock);
   return value;
 }
@@ -2766,7 +2870,7 @@ org_bluez_adapter1_skeleton_get_discovering (OrgBluezAdapter1 *object)
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   gboolean value;
   g_mutex_lock (&skeleton->priv->lock);
-  value = g_value_get_boolean (&(skeleton->priv->properties[9]));
+  value = g_value_get_boolean (&(skeleton->priv->properties[10]));
   g_mutex_unlock (&skeleton->priv->lock);
   return value;
 }
@@ -2777,7 +2881,7 @@ org_bluez_adapter1_skeleton_get_uuids (OrgBluezAdapter1 *object)
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   const gchar *const *value;
   g_mutex_lock (&skeleton->priv->lock);
-  value = g_value_get_boxed (&(skeleton->priv->properties[10]));
+  value = g_value_get_boxed (&(skeleton->priv->properties[11]));
   g_mutex_unlock (&skeleton->priv->lock);
   return value;
 }
@@ -2788,7 +2892,7 @@ org_bluez_adapter1_skeleton_get_modalias (OrgBluezAdapter1 *object)
   OrgBluezAdapter1Skeleton *skeleton = ORG_BLUEZ_ADAPTER1_SKELETON (object);
   const gchar *value;
   g_mutex_lock (&skeleton->priv->lock);
-  value = g_value_get_string (&(skeleton->priv->properties[11]));
+  value = g_value_get_string (&(skeleton->priv->properties[12]));
   g_mutex_unlock (&skeleton->priv->lock);
   return value;
 }
@@ -2823,6 +2927,7 @@ static void
 org_bluez_adapter1_skeleton_iface_init (OrgBluezAdapter1Iface *iface)
 {
   iface->get_address = org_bluez_adapter1_skeleton_get_address;
+  iface->get_address_type = org_bluez_adapter1_skeleton_get_address_type;
   iface->get_name = org_bluez_adapter1_skeleton_get_name;
   iface->get_alias = org_bluez_adapter1_skeleton_get_alias;
   iface->get_class = org_bluez_adapter1_skeleton_get_class;

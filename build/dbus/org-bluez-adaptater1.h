@@ -49,6 +49,8 @@ struct _OrgBluezAdapter1Iface
 
   const gchar * (*get_address) (OrgBluezAdapter1 *object);
 
+  const gchar * (*get_address_type) (OrgBluezAdapter1 *object);
+
   const gchar * (*get_alias) (OrgBluezAdapter1 *object);
 
   guint  (*get_class) (OrgBluezAdapter1 *object);
@@ -173,6 +175,10 @@ gboolean org_bluez_adapter1_call_remove_device_sync (
 const gchar *org_bluez_adapter1_get_address (OrgBluezAdapter1 *object);
 gchar *org_bluez_adapter1_dup_address (OrgBluezAdapter1 *object);
 void org_bluez_adapter1_set_address (OrgBluezAdapter1 *object, const gchar *value);
+
+const gchar *org_bluez_adapter1_get_address_type (OrgBluezAdapter1 *object);
+gchar *org_bluez_adapter1_dup_address_type (OrgBluezAdapter1 *object);
+void org_bluez_adapter1_set_address_type (OrgBluezAdapter1 *object, const gchar *value);
 
 const gchar *org_bluez_adapter1_get_name (OrgBluezAdapter1 *object);
 gchar *org_bluez_adapter1_dup_name (OrgBluezAdapter1 *object);

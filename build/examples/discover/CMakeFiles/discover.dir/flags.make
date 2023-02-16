@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_FLAGS =  -Wall -g  
 
-C_DEFINES = -DBLUEZ_VERSION_MAJOR=5 -DBLUEZ_VERSION_MINOR=43 -DGATTLIB_LOG_BACKEND_SYSLOG -DGATTLIB_LOG_LEVEL=3
+C_DEFINES = -DBLUEZ_VERSION_MAJOR=5 -DBLUEZ_VERSION_MINOR=50 -DGATTLIB_LOG_BACKEND_SYSLOG -DGATTLIB_LOG_LEVEL=3
 
 C_INCLUDES = -I/home/pi/Documents/rpzero_scanner/include -I/home/pi/Documents/rpzero_scanner/dbus/../include 
 

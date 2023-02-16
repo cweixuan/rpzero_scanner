@@ -177,7 +177,7 @@ int main(int argc, const char *argv[]) {
 			GATTLIB_LOG(GATTLIB_ERROR, "Failed to scan.");
 			goto EXIT;
 		}
-	sleep(20);
+	sleep(1);
 	gattlib_adapter_scan_disable(adapter);
 	pthread_mutex_unlock(&g_mutex);
 	}

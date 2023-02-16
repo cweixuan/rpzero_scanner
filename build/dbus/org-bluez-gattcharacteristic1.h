@@ -30,6 +30,17 @@ struct _OrgBluezGattCharacteristic1Iface
 
 
 
+  gboolean (*handle_acquire_notify) (
+    OrgBluezGattCharacteristic1 *object,
+    GDBusMethodInvocation *invocation,
+    GVariant *arg_options);
+
+  gboolean (*handle_acquire_write) (
+    OrgBluezGattCharacteristic1 *object,
+    GDBusMethodInvocation *invocation,
+    GUnixFDList *fd_list,
+    GVariant *arg_options);
+
   gboolean (*handle_read_value) (
     OrgBluezGattCharacteristic1 *object,
     GDBusMethodInvocation *invocation,
@@ -53,6 +64,8 @@ struct _OrgBluezGattCharacteristic1Iface
 
   const gchar *const * (*get_flags) (OrgBluezGattCharacteristic1 *object);
 
+  gboolean  (*get_notify_acquired) (OrgBluezGattCharacteristic1 *object);
+
   gboolean  (*get_notifying) (OrgBluezGattCharacteristic1 *object);
 
   const gchar * (*get_service) (OrgBluezGattCharacteristic1 *object);
@@ -60,6 +73,8 @@ struct _OrgBluezGattCharacteristic1Iface
   const gchar * (*get_uuid) (OrgBluezGattCharacteristic1 *object);
 
   const gchar * (*get_value) (OrgBluezGattCharacteristic1 *object);
+
+  gboolean  (*get_write_acquired) (OrgBluezGattCharacteristic1 *object);
 
   void (*properties_changed) (
     OrgBluezGattCharacteristic1 *object,
@@ -92,6 +107,19 @@ void org_bluez_gatt_characteristic1_complete_start_notify (
 void org_bluez_gatt_characteristic1_complete_stop_notify (
     OrgBluezGattCharacteristic1 *object,
     GDBusMethodInvocation *invocation);
+
+void org_bluez_gatt_characteristic1_complete_acquire_write (
+    OrgBluezGattCharacteristic1 *object,
+    GDBusMethodInvocation *invocation,
+    GUnixFDList *fd_list,
+    GVariant *fd,
+    guint16 mtu);
+
+void org_bluez_gatt_characteristic1_complete_acquire_notify (
+    OrgBluezGattCharacteristic1 *object,
+    GDBusMethodInvocation *invocation,
+    GVariant *fd,
+    guint16 mtu);
 
 
 
@@ -177,6 +205,54 @@ gboolean org_bluez_gatt_characteristic1_call_stop_notify_sync (
     GCancellable *cancellable,
     GError **error);
 
+void org_bluez_gatt_characteristic1_call_acquire_write (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant *arg_options,
+    GUnixFDList *fd_list,
+    GCancellable *cancellable,
+    GAsyncReadyCallback callback,
+    gpointer user_data);
+
+gboolean org_bluez_gatt_characteristic1_call_acquire_write_finish (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant **out_fd,
+    guint16 *out_mtu,
+    GUnixFDList **out_fd_list,
+    GAsyncResult *res,
+    GError **error);
+
+gboolean org_bluez_gatt_characteristic1_call_acquire_write_sync (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant *arg_options,
+    GUnixFDList  *fd_list,
+    GVariant **out_fd,
+    guint16 *out_mtu,
+    GUnixFDList **out_fd_list,
+    GCancellable *cancellable,
+    GError **error);
+
+void org_bluez_gatt_characteristic1_call_acquire_notify (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant *arg_options,
+    GCancellable *cancellable,
+    GAsyncReadyCallback callback,
+    gpointer user_data);
+
+gboolean org_bluez_gatt_characteristic1_call_acquire_notify_finish (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant **out_fd,
+    guint16 *out_mtu,
+    GAsyncResult *res,
+    GError **error);
+
+gboolean org_bluez_gatt_characteristic1_call_acquire_notify_sync (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant *arg_options,
+    GVariant **out_fd,
+    guint16 *out_mtu,
+    GCancellable *cancellable,
+    GError **error);
+
 
 
 /* D-Bus property accessors: */
@@ -202,6 +278,12 @@ void org_bluez_gatt_characteristic1_set_flags (OrgBluezGattCharacteristic1 *obje
 const gchar *const *org_bluez_gatt_characteristic1_get_descriptors (OrgBluezGattCharacteristic1 *object);
 gchar **org_bluez_gatt_characteristic1_dup_descriptors (OrgBluezGattCharacteristic1 *object);
 void org_bluez_gatt_characteristic1_set_descriptors (OrgBluezGattCharacteristic1 *object, const gchar *const *value);
+
+gboolean org_bluez_gatt_characteristic1_get_write_acquired (OrgBluezGattCharacteristic1 *object);
+void org_bluez_gatt_characteristic1_set_write_acquired (OrgBluezGattCharacteristic1 *object, gboolean value);
+
+gboolean org_bluez_gatt_characteristic1_get_notify_acquired (OrgBluezGattCharacteristic1 *object);
+void org_bluez_gatt_characteristic1_set_notify_acquired (OrgBluezGattCharacteristic1 *object, gboolean value);
 
 
 /* ---- */

@@ -278,12 +278,132 @@ static const _ExtendedGDBusMethodInfo _org_bluez_gatt_characteristic1_method_inf
   FALSE
 };
 
+static const _ExtendedGDBusArgInfo _org_bluez_gatt_characteristic1_method_info_acquire_write_IN_ARG_options =
+{
+  {
+    -1,
+    (gchar *) "options",
+    (gchar *) "a{sv}",
+    NULL
+  },
+  FALSE
+};
+
+static const _ExtendedGDBusArgInfo * const _org_bluez_gatt_characteristic1_method_info_acquire_write_IN_ARG_pointers[] =
+{
+  &_org_bluez_gatt_characteristic1_method_info_acquire_write_IN_ARG_options,
+  NULL
+};
+
+static const _ExtendedGDBusArgInfo _org_bluez_gatt_characteristic1_method_info_acquire_write_OUT_ARG_fd =
+{
+  {
+    -1,
+    (gchar *) "fd",
+    (gchar *) "h",
+    NULL
+  },
+  FALSE
+};
+
+static const _ExtendedGDBusArgInfo _org_bluez_gatt_characteristic1_method_info_acquire_write_OUT_ARG_mtu =
+{
+  {
+    -1,
+    (gchar *) "mtu",
+    (gchar *) "q",
+    NULL
+  },
+  FALSE
+};
+
+static const _ExtendedGDBusArgInfo * const _org_bluez_gatt_characteristic1_method_info_acquire_write_OUT_ARG_pointers[] =
+{
+  &_org_bluez_gatt_characteristic1_method_info_acquire_write_OUT_ARG_fd,
+  &_org_bluez_gatt_characteristic1_method_info_acquire_write_OUT_ARG_mtu,
+  NULL
+};
+
+static const _ExtendedGDBusMethodInfo _org_bluez_gatt_characteristic1_method_info_acquire_write =
+{
+  {
+    -1,
+    (gchar *) "AcquireWrite",
+    (GDBusArgInfo **) &_org_bluez_gatt_characteristic1_method_info_acquire_write_IN_ARG_pointers,
+    (GDBusArgInfo **) &_org_bluez_gatt_characteristic1_method_info_acquire_write_OUT_ARG_pointers,
+    NULL
+  },
+  "handle-acquire-write",
+  TRUE
+};
+
+static const _ExtendedGDBusArgInfo _org_bluez_gatt_characteristic1_method_info_acquire_notify_IN_ARG_options =
+{
+  {
+    -1,
+    (gchar *) "options",
+    (gchar *) "a{sv}",
+    NULL
+  },
+  FALSE
+};
+
+static const _ExtendedGDBusArgInfo * const _org_bluez_gatt_characteristic1_method_info_acquire_notify_IN_ARG_pointers[] =
+{
+  &_org_bluez_gatt_characteristic1_method_info_acquire_notify_IN_ARG_options,
+  NULL
+};
+
+static const _ExtendedGDBusArgInfo _org_bluez_gatt_characteristic1_method_info_acquire_notify_OUT_ARG_fd =
+{
+  {
+    -1,
+    (gchar *) "fd",
+    (gchar *) "h",
+    NULL
+  },
+  FALSE
+};
+
+static const _ExtendedGDBusArgInfo _org_bluez_gatt_characteristic1_method_info_acquire_notify_OUT_ARG_mtu =
+{
+  {
+    -1,
+    (gchar *) "mtu",
+    (gchar *) "q",
+    NULL
+  },
+  FALSE
+};
+
+static const _ExtendedGDBusArgInfo * const _org_bluez_gatt_characteristic1_method_info_acquire_notify_OUT_ARG_pointers[] =
+{
+  &_org_bluez_gatt_characteristic1_method_info_acquire_notify_OUT_ARG_fd,
+  &_org_bluez_gatt_characteristic1_method_info_acquire_notify_OUT_ARG_mtu,
+  NULL
+};
+
+static const _ExtendedGDBusMethodInfo _org_bluez_gatt_characteristic1_method_info_acquire_notify =
+{
+  {
+    -1,
+    (gchar *) "AcquireNotify",
+    (GDBusArgInfo **) &_org_bluez_gatt_characteristic1_method_info_acquire_notify_IN_ARG_pointers,
+    (GDBusArgInfo **) &_org_bluez_gatt_characteristic1_method_info_acquire_notify_OUT_ARG_pointers,
+    NULL
+  },
+  "handle-acquire-notify",
+  FALSE
+};
+
 static const _ExtendedGDBusMethodInfo * const _org_bluez_gatt_characteristic1_method_info_pointers[] =
 {
   &_org_bluez_gatt_characteristic1_method_info_read_value,
   &_org_bluez_gatt_characteristic1_method_info_write_value,
   &_org_bluez_gatt_characteristic1_method_info_start_notify,
   &_org_bluez_gatt_characteristic1_method_info_stop_notify,
+  &_org_bluez_gatt_characteristic1_method_info_acquire_write,
+  &_org_bluez_gatt_characteristic1_method_info_acquire_notify,
   NULL
 };
 
@@ -423,6 +543,32 @@ static const _ExtendedGDBusPropertyInfo _org_bluez_gatt_characteristic1_property
   FALSE
 };
 
+static const _ExtendedGDBusPropertyInfo _org_bluez_gatt_characteristic1_property_info_write_acquired =
+{
+  {
+    -1,
+    (gchar *) "WriteAcquired",
+    (gchar *) "b",
+    G_DBUS_PROPERTY_INFO_FLAGS_READABLE,
+    NULL
+  },
+  "write-acquired",
+  FALSE
+};
+
+static const _ExtendedGDBusPropertyInfo _org_bluez_gatt_characteristic1_property_info_notify_acquired =
+{
+  {
+    -1,
+    (gchar *) "NotifyAcquired",
+    (gchar *) "b",
+    G_DBUS_PROPERTY_INFO_FLAGS_READABLE,
+    NULL
+  },
+  "notify-acquired",
+  FALSE
+};
+
 static const _ExtendedGDBusPropertyInfo * const _org_bluez_gatt_characteristic1_property_info_pointers[] =
 {
   &_org_bluez_gatt_characteristic1_property_info_uuid,
@@ -431,6 +577,8 @@ static const _ExtendedGDBusPropertyInfo * const _org_bluez_gatt_characteristic1_
   &_org_bluez_gatt_characteristic1_property_info_notifying,
   &_org_bluez_gatt_characteristic1_property_info_flags,
   &_org_bluez_gatt_characteristic1_property_info_descriptors,
+  &_org_bluez_gatt_characteristic1_property_info_write_acquired,
+  &_org_bluez_gatt_characteristic1_property_info_notify_acquired,
   NULL
 };
 
@@ -480,6 +628,8 @@ org_bluez_gatt_characteristic1_override_properties (GObjectClass *klass, guint p
   g_object_class_override_property (klass, property_id_begin++, "notifying");
   g_object_class_override_property (klass, property_id_begin++, "flags");
   g_object_class_override_property (klass, property_id_begin++, "descriptors");
+  g_object_class_override_property (klass, property_id_begin++, "write-acquired");
+  g_object_class_override_property (klass, property_id_begin++, "notify-acquired");
   return property_id_begin - 1;
 }
 
@@ -494,16 +644,20 @@ org_bluez_gatt_characteristic1_override_properties (GObjectClass *klass, guint p
 /**
  * OrgBluezGattCharacteristic1Iface:
  * @parent_iface: The parent interface.
+ * @handle_acquire_notify: Handler for the #OrgBluezGattCharacteristic1::handle-acquire-notify signal.
+ * @handle_acquire_write: Handler for the #OrgBluezGattCharacteristic1::handle-acquire-write signal.
  * @handle_read_value: Handler for the #OrgBluezGattCharacteristic1::handle-read-value signal.
  * @handle_start_notify: Handler for the #OrgBluezGattCharacteristic1::handle-start-notify signal.
  * @handle_stop_notify: Handler for the #OrgBluezGattCharacteristic1::handle-stop-notify signal.
  * @handle_write_value: Handler for the #OrgBluezGattCharacteristic1::handle-write-value signal.
  * @get_descriptors: Getter for the #OrgBluezGattCharacteristic1:descriptors property.
  * @get_flags: Getter for the #OrgBluezGattCharacteristic1:flags property.
+ * @get_notify_acquired: Getter for the #OrgBluezGattCharacteristic1:notify-acquired property.
  * @get_notifying: Getter for the #OrgBluezGattCharacteristic1:notifying property.
  * @get_service: Getter for the #OrgBluezGattCharacteristic1:service property.
  * @get_uuid: Getter for the #OrgBluezGattCharacteristic1:uuid property.
  * @get_value: Getter for the #OrgBluezGattCharacteristic1:value property.
+ * @get_write_acquired: Getter for the #OrgBluezGattCharacteristic1:write-acquired property.
  * @properties_changed: Handler for the #OrgBluezGattCharacteristic1::properties-changed signal.
  *
  * Virtual table for the D-Bus interface <link linkend="gdbus-interface-org-bluez-GattCharacteristic1.top_of_page">org.bluez.GattCharacteristic1</link>.
@@ -607,6 +761,53 @@ org_bluez_gatt_characteristic1_default_init (OrgBluezGattCharacteristic1Iface *i
     1,
     G_TYPE_DBUS_METHOD_INVOCATION);
 
+  /**
+   * OrgBluezGattCharacteristic1::handle-acquire-write:
+   * @object: A #OrgBluezGattCharacteristic1.
+   * @invocation: A #GDBusMethodInvocation.
+   * @fd_list: (allow-none): A #GUnixFDList or %NULL.
+   * @arg_options: Argument passed by remote caller.
+   *
+   * Signal emitted when a remote caller is invoking the <link linkend="gdbus-method-org-bluez-GattCharacteristic1.AcquireWrite">AcquireWrite()</link> D-Bus method.
+   *
+   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call org_bluez_gatt_characteristic1_complete_acquire_write() or e.g. g_dbus_method_invocation_return_error() on it) and no order signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
+   *
+   * Returns: %TRUE if the invocation was handled, %FALSE to let other signal handlers run.
+   */
+  g_signal_new ("handle-acquire-write",
+    G_TYPE_FROM_INTERFACE (iface),
+    G_SIGNAL_RUN_LAST,
+    G_STRUCT_OFFSET (OrgBluezGattCharacteristic1Iface, handle_acquire_write),
+    g_signal_accumulator_true_handled,
+    NULL,
+    g_cclosure_marshal_generic,
+    G_TYPE_BOOLEAN,
+    3,
+    G_TYPE_DBUS_METHOD_INVOCATION, G_TYPE_UNIX_FD_LIST, G_TYPE_VARIANT);
+
+  /**
+   * OrgBluezGattCharacteristic1::handle-acquire-notify:
+   * @object: A #OrgBluezGattCharacteristic1.
+   * @invocation: A #GDBusMethodInvocation.
+   * @arg_options: Argument passed by remote caller.
+   *
+   * Signal emitted when a remote caller is invoking the <link linkend="gdbus-method-org-bluez-GattCharacteristic1.AcquireNotify">AcquireNotify()</link> D-Bus method.
+   *
+   * If a signal handler returns %TRUE, it means the signal handler will handle the invocation (e.g. take a reference to @invocation and eventually call org_bluez_gatt_characteristic1_complete_acquire_notify() or e.g. g_dbus_method_invocation_return_error() on it) and no order signal handlers will run. If no signal handler handles the invocation, the %G_DBUS_ERROR_UNKNOWN_METHOD error is returned.
+   *
+   * Returns: %TRUE if the invocation was handled, %FALSE to let other signal handlers run.
+   */
+  g_signal_new ("handle-acquire-notify",
+    G_TYPE_FROM_INTERFACE (iface),
+    G_SIGNAL_RUN_LAST,
+    G_STRUCT_OFFSET (OrgBluezGattCharacteristic1Iface, handle_acquire_notify),
+    g_signal_accumulator_true_handled,
+    NULL,
+    g_cclosure_marshal_generic,
+    G_TYPE_BOOLEAN,
+    2,
+    G_TYPE_DBUS_METHOD_INVOCATION, G_TYPE_VARIANT);
+
   /* GObject signals for received D-Bus signals: */
   /**
    * OrgBluezGattCharacteristic1::properties-changed:
@@ -684,6 +885,24 @@ org_bluez_gatt_characteristic1_default_init (OrgBluezGattCharacteristic1Iface *i
    */
   g_object_interface_install_property (iface,
     g_param_spec_boxed ("descriptors", "Descriptors", "Descriptors", G_TYPE_STRV, G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+  /**
+   * OrgBluezGattCharacteristic1:write-acquired:
+   *
+   * Represents the D-Bus property <link linkend="gdbus-property-org-bluez-GattCharacteristic1.WriteAcquired">"WriteAcquired"</link>.
+   *
+   * Since the D-Bus property for this #GObject property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+   */
+  g_object_interface_install_property (iface,
+    g_param_spec_boolean ("write-acquired", "WriteAcquired", "WriteAcquired", FALSE, G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
+  /**
+   * OrgBluezGattCharacteristic1:notify-acquired:
+   *
+   * Represents the D-Bus property <link linkend="gdbus-property-org-bluez-GattCharacteristic1.NotifyAcquired">"NotifyAcquired"</link>.
+   *
+   * Since the D-Bus property for this #GObject property is readable but not writable, it is meaningful to read from it on both the client- and service-side. It is only meaningful, however, to write to it on the service-side.
+   */
+  g_object_interface_install_property (iface,
+    g_param_spec_boolean ("notify-acquired", "NotifyAcquired", "NotifyAcquired", FALSE, G_PARAM_READWRITE | G_PARAM_STATIC_STRINGS));
 }
 
 /**
@@ -970,6 +1189,68 @@ void
 org_bluez_gatt_characteristic1_set_descriptors (OrgBluezGattCharacteristic1 *object, const gchar *const *value)
 {
   g_object_set (G_OBJECT (object), "descriptors", value, NULL);
+}
+
+/**
+ * org_bluez_gatt_characteristic1_get_write_acquired: (skip)
+ * @object: A #OrgBluezGattCharacteristic1.
+ *
+ * Gets the value of the <link linkend="gdbus-property-org-bluez-GattCharacteristic1.WriteAcquired">"WriteAcquired"</link> D-Bus property.
+ *
+ * Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
+ *
+ * Returns: The property value.
+ */
+gboolean 
+org_bluez_gatt_characteristic1_get_write_acquired (OrgBluezGattCharacteristic1 *object)
+{
+  return ORG_BLUEZ_GATT_CHARACTERISTIC1_GET_IFACE (object)->get_write_acquired (object);
+}
+
+/**
+ * org_bluez_gatt_characteristic1_set_write_acquired: (skip)
+ * @object: A #OrgBluezGattCharacteristic1.
+ * @value: The value to set.
+ *
+ * Sets the <link linkend="gdbus-property-org-bluez-GattCharacteristic1.WriteAcquired">"WriteAcquired"</link> D-Bus property to @value.
+ *
+ * Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
+ */
+void
+org_bluez_gatt_characteristic1_set_write_acquired (OrgBluezGattCharacteristic1 *object, gboolean value)
+{
+  g_object_set (G_OBJECT (object), "write-acquired", value, NULL);
+}
+
+/**
+ * org_bluez_gatt_characteristic1_get_notify_acquired: (skip)
+ * @object: A #OrgBluezGattCharacteristic1.
+ *
+ * Gets the value of the <link linkend="gdbus-property-org-bluez-GattCharacteristic1.NotifyAcquired">"NotifyAcquired"</link> D-Bus property.
+ *
+ * Since this D-Bus property is readable, it is meaningful to use this function on both the client- and service-side.
+ *
+ * Returns: The property value.
+ */
+gboolean 
+org_bluez_gatt_characteristic1_get_notify_acquired (OrgBluezGattCharacteristic1 *object)
+{
+  return ORG_BLUEZ_GATT_CHARACTERISTIC1_GET_IFACE (object)->get_notify_acquired (object);
+}
+
+/**
+ * org_bluez_gatt_characteristic1_set_notify_acquired: (skip)
+ * @object: A #OrgBluezGattCharacteristic1.
+ * @value: The value to set.
+ *
+ * Sets the <link linkend="gdbus-property-org-bluez-GattCharacteristic1.NotifyAcquired">"NotifyAcquired"</link> D-Bus property to @value.
+ *
+ * Since this D-Bus property is not writable, it is only meaningful to use this function on the service-side.
+ */
+void
+org_bluez_gatt_characteristic1_set_notify_acquired (OrgBluezGattCharacteristic1 *object, gboolean value)
+{
+  g_object_set (G_OBJECT (object), "notify-acquired", value, NULL);
 }
 
 /**
@@ -1384,6 +1665,237 @@ _out:
 }
 
 /**
+ * org_bluez_gatt_characteristic1_call_acquire_write:
+ * @proxy: A #OrgBluezGattCharacteristic1Proxy.
+ * @arg_options: Argument to pass with the method invocation.
+ * @fd_list: (allow-none): A #GUnixFDList or %NULL.
+ * @cancellable: (allow-none): A #GCancellable or %NULL.
+ * @callback: A #GAsyncReadyCallback to call when the request is satisfied or %NULL.
+ * @user_data: User data to pass to @callback.
+ *
+ * Asynchronously invokes the <link linkend="gdbus-method-org-bluez-GattCharacteristic1.AcquireWrite">AcquireWrite()</link> D-Bus method on @proxy.
+ * When the operation is finished, @callback will be invoked in the <link linkend="g-main-context-push-thread-default">thread-default main loop</link> of the thread you are calling this method from.
+ * You can then call org_bluez_gatt_characteristic1_call_acquire_write_finish() to get the result of the operation.
+ *
+ * See org_bluez_gatt_characteristic1_call_acquire_write_sync() for the synchronous, blocking version of this method.
+ */
+void
+org_bluez_gatt_characteristic1_call_acquire_write (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant *arg_options,
+    GUnixFDList *fd_list,
+    GCancellable *cancellable,
+    GAsyncReadyCallback callback,
+    gpointer user_data)
+{
+  g_dbus_proxy_call_with_unix_fd_list (G_DBUS_PROXY (proxy),
+    "AcquireWrite",
+    g_variant_new ("(@a{sv})",
+                   arg_options),
+    G_DBUS_CALL_FLAGS_NONE,
+    -1,
+    fd_list,
+    cancellable,
+    callback,
+    user_data);
+}
+
+/**
+ * org_bluez_gatt_characteristic1_call_acquire_write_finish:
+ * @proxy: A #OrgBluezGattCharacteristic1Proxy.
+ * @out_fd: (out): Return location for return parameter or %NULL to ignore.
+ * @out_mtu: (out): Return location for return parameter or %NULL to ignore.
+ * @out_fd_list: (out): Return location for a #GUnixFDList or %NULL.
+ * @res: The #GAsyncResult obtained from the #GAsyncReadyCallback passed to org_bluez_gatt_characteristic1_call_acquire_write().
+ * @error: Return location for error or %NULL.
+ *
+ * Finishes an operation started with org_bluez_gatt_characteristic1_call_acquire_write().
+ *
+ * Returns: (skip): %TRUE if the call succeded, %FALSE if @error is set.
+ */
+gboolean
+org_bluez_gatt_characteristic1_call_acquire_write_finish (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant **out_fd,
+    guint16 *out_mtu,
+    GUnixFDList **out_fd_list,
+    GAsyncResult *res,
+    GError **error)
+{
+  GVariant *_ret;
+  _ret = g_dbus_proxy_call_with_unix_fd_list_finish (G_DBUS_PROXY (proxy), out_fd_list, res, error);
+  if (_ret == NULL)
+    goto _out;
+  g_variant_get (_ret,
+                 "(@hq)",
+                 out_fd,
+                 out_mtu);
+  g_variant_unref (_ret);
+_out:
+  return _ret != NULL;
+}
+
+/**
+ * org_bluez_gatt_characteristic1_call_acquire_write_sync:
+ * @proxy: A #OrgBluezGattCharacteristic1Proxy.
+ * @arg_options: Argument to pass with the method invocation.
+ * @fd_list: (allow-none): A #GUnixFDList or %NULL.
+ * @out_fd: (out): Return location for return parameter or %NULL to ignore.
+ * @out_mtu: (out): Return location for return parameter or %NULL to ignore.
+ * @out_fd_list: (out): Return location for a #GUnixFDList or %NULL.
+ * @cancellable: (allow-none): A #GCancellable or %NULL.
+ * @error: Return location for error or %NULL.
+ *
+ * Synchronously invokes the <link linkend="gdbus-method-org-bluez-GattCharacteristic1.AcquireWrite">AcquireWrite()</link> D-Bus method on @proxy. The calling thread is blocked until a reply is received.
+ *
+ * See org_bluez_gatt_characteristic1_call_acquire_write() for the asynchronous version of this method.
+ *
+ * Returns: (skip): %TRUE if the call succeded, %FALSE if @error is set.
+ */
+gboolean
+org_bluez_gatt_characteristic1_call_acquire_write_sync (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant *arg_options,
+    GUnixFDList  *fd_list,
+    GVariant **out_fd,
+    guint16 *out_mtu,
+    GUnixFDList **out_fd_list,
+    GCancellable *cancellable,
+    GError **error)
+{
+  GVariant *_ret;
+  _ret = g_dbus_proxy_call_with_unix_fd_list_sync (G_DBUS_PROXY (proxy),
+    "AcquireWrite",
+    g_variant_new ("(@a{sv})",
+                   arg_options),
+    G_DBUS_CALL_FLAGS_NONE,
+    -1,
+    fd_list,
+    out_fd_list,
+    cancellable,
+    error);
+  if (_ret == NULL)
+    goto _out;
+  g_variant_get (_ret,
+                 "(@hq)",
+                 out_fd,
+                 out_mtu);
+  g_variant_unref (_ret);
+_out:
+  return _ret != NULL;
+}
+
+/**
+ * org_bluez_gatt_characteristic1_call_acquire_notify:
+ * @proxy: A #OrgBluezGattCharacteristic1Proxy.
+ * @arg_options: Argument to pass with the method invocation.
+ * @cancellable: (allow-none): A #GCancellable or %NULL.
+ * @callback: A #GAsyncReadyCallback to call when the request is satisfied or %NULL.
+ * @user_data: User data to pass to @callback.
+ *
+ * Asynchronously invokes the <link linkend="gdbus-method-org-bluez-GattCharacteristic1.AcquireNotify">AcquireNotify()</link> D-Bus method on @proxy.
+ * When the operation is finished, @callback will be invoked in the <link linkend="g-main-context-push-thread-default">thread-default main loop</link> of the thread you are calling this method from.
+ * You can then call org_bluez_gatt_characteristic1_call_acquire_notify_finish() to get the result of the operation.
+ *
+ * See org_bluez_gatt_characteristic1_call_acquire_notify_sync() for the synchronous, blocking version of this method.
+ */
+void
+org_bluez_gatt_characteristic1_call_acquire_notify (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant *arg_options,
+    GCancellable *cancellable,
+    GAsyncReadyCallback callback,
+    gpointer user_data)
+{
+  g_dbus_proxy_call (G_DBUS_PROXY (proxy),
+    "AcquireNotify",
+    g_variant_new ("(@a{sv})",
+                   arg_options),
+    G_DBUS_CALL_FLAGS_NONE,
+    -1,
+    cancellable,
+    callback,
+    user_data);
+}
+
+/**
+ * org_bluez_gatt_characteristic1_call_acquire_notify_finish:
+ * @proxy: A #OrgBluezGattCharacteristic1Proxy.
+ * @out_fd: (out): Return location for return parameter or %NULL to ignore.
+ * @out_mtu: (out): Return location for return parameter or %NULL to ignore.
+ * @res: The #GAsyncResult obtained from the #GAsyncReadyCallback passed to org_bluez_gatt_characteristic1_call_acquire_notify().
+ * @error: Return location for error or %NULL.
+ *
+ * Finishes an operation started with org_bluez_gatt_characteristic1_call_acquire_notify().
+ *
+ * Returns: (skip): %TRUE if the call succeded, %FALSE if @error is set.
+ */
+gboolean
+org_bluez_gatt_characteristic1_call_acquire_notify_finish (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant **out_fd,
+    guint16 *out_mtu,
+    GAsyncResult *res,
+    GError **error)
+{
+  GVariant *_ret;
+  _ret = g_dbus_proxy_call_finish (G_DBUS_PROXY (proxy), res, error);
+  if (_ret == NULL)
+    goto _out;
+  g_variant_get (_ret,
+                 "(@hq)",
+                 out_fd,
+                 out_mtu);
+  g_variant_unref (_ret);
+_out:
+  return _ret != NULL;
+}
+
+/**
+ * org_bluez_gatt_characteristic1_call_acquire_notify_sync:
+ * @proxy: A #OrgBluezGattCharacteristic1Proxy.
+ * @arg_options: Argument to pass with the method invocation.
+ * @out_fd: (out): Return location for return parameter or %NULL to ignore.
+ * @out_mtu: (out): Return location for return parameter or %NULL to ignore.
+ * @cancellable: (allow-none): A #GCancellable or %NULL.
+ * @error: Return location for error or %NULL.
+ *
+ * Synchronously invokes the <link linkend="gdbus-method-org-bluez-GattCharacteristic1.AcquireNotify">AcquireNotify()</link> D-Bus method on @proxy. The calling thread is blocked until a reply is received.
+ *
+ * See org_bluez_gatt_characteristic1_call_acquire_notify() for the asynchronous version of this method.
+ *
+ * Returns: (skip): %TRUE if the call succeded, %FALSE if @error is set.
+ */
+gboolean
+org_bluez_gatt_characteristic1_call_acquire_notify_sync (
+    OrgBluezGattCharacteristic1 *proxy,
+    GVariant *arg_options,
+    GVariant **out_fd,
+    guint16 *out_mtu,
+    GCancellable *cancellable,
+    GError **error)
+{
+  GVariant *_ret;
+  _ret = g_dbus_proxy_call_sync (G_DBUS_PROXY (proxy),
+    "AcquireNotify",
+    g_variant_new ("(@a{sv})",
+                   arg_options),
+    G_DBUS_CALL_FLAGS_NONE,
+    -1,
+    cancellable,
+    error);
+  if (_ret == NULL)
+    goto _out;
+  g_variant_get (_ret,
+                 "(@hq)",
+                 out_fd,
+                 out_mtu);
+  g_variant_unref (_ret);
+_out:
+  return _ret != NULL;
+}
+
+/**
  * org_bluez_gatt_characteristic1_complete_read_value:
  * @object: A #OrgBluezGattCharacteristic1.
  * @invocation: (transfer full): A #GDBusMethodInvocation.
@@ -1458,6 +1970,57 @@ org_bluez_gatt_characteristic1_complete_stop_notify (
     g_variant_new ("()"));
 }
 
+/**
+ * org_bluez_gatt_characteristic1_complete_acquire_write:
+ * @object: A #OrgBluezGattCharacteristic1.
+ * @invocation: (transfer full): A #GDBusMethodInvocation.
+ * @fd_list: (allow-none): A #GUnixFDList or %NULL.
+ * @fd: Parameter to return.
+ * @mtu: Parameter to return.
+ *
+ * Helper function used in service implementations to finish handling invocations of the <link linkend="gdbus-method-org-bluez-GattCharacteristic1.AcquireWrite">AcquireWrite()</link> D-Bus method. If you instead want to finish handling an invocation by returning an error, use g_dbus_method_invocation_return_error() or similar.
+ *
+ * This method will free @invocation, you cannot use it afterwards.
+ */
+void
+org_bluez_gatt_characteristic1_complete_acquire_write (
+    OrgBluezGattCharacteristic1 *object,
+    GDBusMethodInvocation *invocation,
+    GUnixFDList *fd_list,
+    GVariant *fd,
+    guint16 mtu)
+{
+  g_dbus_method_invocation_return_value_with_unix_fd_list (invocation,
+    g_variant_new ("(@hq)",
+                   fd,
+                   mtu),
+    fd_list);
+}
+
+/**
+ * org_bluez_gatt_characteristic1_complete_acquire_notify:
+ * @object: A #OrgBluezGattCharacteristic1.
+ * @invocation: (transfer full): A #GDBusMethodInvocation.
+ * @fd: Parameter to return.
+ * @mtu: Parameter to return.
+ *
+ * Helper function used in service implementations to finish handling invocations of the <link linkend="gdbus-method-org-bluez-GattCharacteristic1.AcquireNotify">AcquireNotify()</link> D-Bus method. If you instead want to finish handling an invocation by returning an error, use g_dbus_method_invocation_return_error() or similar.
+ *
+ * This method will free @invocation, you cannot use it afterwards.
+ */
+void
+org_bluez_gatt_characteristic1_complete_acquire_notify (
+    OrgBluezGattCharacteristic1 *object,
+    GDBusMethodInvocation *invocation,
+    GVariant *fd,
+    guint16 mtu)
+{
+  g_dbus_method_invocation_return_value (invocation,
+    g_variant_new ("(@hq)",
+                   fd,
+                   mtu));
+}
+
 /* ------------------------------------------------------------------------ */
 
 /**
@@ -1506,7 +2069,7 @@ org_bluez_gatt_characteristic1_proxy_get_property (GObject      *object,
 {
   const _ExtendedGDBusPropertyInfo *info;
   GVariant *variant;
-  g_assert (prop_id != 0 && prop_id - 1 < 6);
+  g_assert (prop_id != 0 && prop_id - 1 < 8);
   info = _org_bluez_gatt_characteristic1_property_info_pointers[prop_id - 1];
   variant = g_dbus_proxy_get_cached_property (G_DBUS_PROXY (object), info->parent_struct.name);
   if (info->use_gvariant)
@@ -1553,7 +2116,7 @@ org_bluez_gatt_characteristic1_proxy_set_property (GObject      *object,
 {
   const _ExtendedGDBusPropertyInfo *info;
   GVariant *variant;
-  g_assert (prop_id != 0 && prop_id - 1 < 6);
+  g_assert (prop_id != 0 && prop_id - 1 < 8);
   info = _org_bluez_gatt_characteristic1_property_info_pointers[prop_id - 1];
   variant = g_dbus_gvalue_to_gvariant (value, G_VARIANT_TYPE (info->parent_struct.signature));
   g_dbus_proxy_call (G_DBUS_PROXY (object),
@@ -1729,6 +2292,36 @@ org_bluez_gatt_characteristic1_proxy_get_descriptors (OrgBluezGattCharacteristic
   return value;
 }
 
+static gboolean 
+org_bluez_gatt_characteristic1_proxy_get_write_acquired (OrgBluezGattCharacteristic1 *object)
+{
+  OrgBluezGattCharacteristic1Proxy *proxy = ORG_BLUEZ_GATT_CHARACTERISTIC1_PROXY (object);
+  GVariant *variant;
+  gboolean value = 0;
+  variant = g_dbus_proxy_get_cached_property (G_DBUS_PROXY (proxy), "WriteAcquired");
+  if (variant != NULL)
+    {
+      value = g_variant_get_boolean (variant);
+      g_variant_unref (variant);
+    }
+  return value;
+}
+
+static gboolean 
+org_bluez_gatt_characteristic1_proxy_get_notify_acquired (OrgBluezGattCharacteristic1 *object)
+{
+  OrgBluezGattCharacteristic1Proxy *proxy = ORG_BLUEZ_GATT_CHARACTERISTIC1_PROXY (object);
+  GVariant *variant;
+  gboolean value = 0;
+  variant = g_dbus_proxy_get_cached_property (G_DBUS_PROXY (proxy), "NotifyAcquired");
+  if (variant != NULL)
+    {
+      value = g_variant_get_boolean (variant);
+      g_variant_unref (variant);
+    }
+  return value;
+}
+
 static void
 org_bluez_gatt_characteristic1_proxy_init (OrgBluezGattCharacteristic1Proxy *proxy)
 {
@@ -1772,6 +2365,8 @@ org_bluez_gatt_characteristic1_proxy_iface_init (OrgBluezGattCharacteristic1Ifac
   iface->get_notifying = org_bluez_gatt_characteristic1_proxy_get_notifying;
   iface->get_flags = org_bluez_gatt_characteristic1_proxy_get_flags;
   iface->get_descriptors = org_bluez_gatt_characteristic1_proxy_get_descriptors;
+  iface->get_write_acquired = org_bluez_gatt_characteristic1_proxy_get_write_acquired;
+  iface->get_notify_acquired = org_bluez_gatt_characteristic1_proxy_get_notify_acquired;
 }
 
 /**
@@ -2226,7 +2821,7 @@ org_bluez_gatt_characteristic1_skeleton_finalize (GObject *object)
 {
   OrgBluezGattCharacteristic1Skeleton *skeleton = ORG_BLUEZ_GATT_CHARACTERISTIC1_SKELETON (object);
   guint n;
-  for (n = 0; n < 6; n++)
+  for (n = 0; n < 8; n++)
     g_value_unset (&skeleton->priv->properties[n]);
   g_free (skeleton->priv->properties);
   g_list_free_full (skeleton->priv->changed_properties, (GDestroyNotify) _changed_property_free);
@@ -2244,7 +2839,7 @@ org_bluez_gatt_characteristic1_skeleton_get_property (GObject      *object,
   GParamSpec   *pspec G_GNUC_UNUSED)
 {
   OrgBluezGattCharacteristic1Skeleton *skeleton = ORG_BLUEZ_GATT_CHARACTERISTIC1_SKELETON (object);
-  g_assert (prop_id != 0 && prop_id - 1 < 6);
+  g_assert (prop_id != 0 && prop_id - 1 < 8);
   g_mutex_lock (&skeleton->priv->lock);
   g_value_copy (&skeleton->priv->properties[prop_id - 1], value);
   g_mutex_unlock (&skeleton->priv->lock);
@@ -2362,7 +2957,7 @@ org_bluez_gatt_characteristic1_skeleton_set_property (GObject      *object,
   GParamSpec   *pspec)
 {
   OrgBluezGattCharacteristic1Skeleton *skeleton = ORG_BLUEZ_GATT_CHARACTERISTIC1_SKELETON (object);
-  g_assert (prop_id != 0 && prop_id - 1 < 6);
+  g_assert (prop_id != 0 && prop_id - 1 < 8);
   g_mutex_lock (&skeleton->priv->lock);
   g_object_freeze_notify (object);
   if (!_g_value_equal (value, &skeleton->priv->properties[prop_id - 1]))
@@ -2387,13 +2982,15 @@ org_bluez_gatt_characteristic1_skeleton_init (OrgBluezGattCharacteristic1Skeleto
 
   g_mutex_init (&skeleton->priv->lock);
   skeleton->priv->context = g_main_context_ref_thread_default ();
-  skeleton->priv->properties = g_new0 (GValue, 6);
+  skeleton->priv->properties = g_new0 (GValue, 8);
   g_value_init (&skeleton->priv->properties[0], G_TYPE_STRING);
   g_value_init (&skeleton->priv->properties[1], G_TYPE_STRING);
   g_value_init (&skeleton->priv->properties[2], G_TYPE_STRING);
   g_value_init (&skeleton->priv->properties[3], G_TYPE_BOOLEAN);
   g_value_init (&skeleton->priv->properties[4], G_TYPE_STRV);
   g_value_init (&skeleton->priv->properties[5], G_TYPE_STRV);
+  g_value_init (&skeleton->priv->properties[6], G_TYPE_BOOLEAN);
+  g_value_init (&skeleton->priv->properties[7], G_TYPE_BOOLEAN);
 }
 
 static const gchar *
@@ -2462,6 +3059,28 @@ org_bluez_gatt_characteristic1_skeleton_get_descriptors (OrgBluezGattCharacteris
   return value;
 }
 
+static gboolean 
+org_bluez_gatt_characteristic1_skeleton_get_write_acquired (OrgBluezGattCharacteristic1 *object)
+{
+  OrgBluezGattCharacteristic1Skeleton *skeleton = ORG_BLUEZ_GATT_CHARACTERISTIC1_SKELETON (object);
+  gboolean value;
+  g_mutex_lock (&skeleton->priv->lock);
+  value = g_value_get_boolean (&(skeleton->priv->properties[6]));
+  g_mutex_unlock (&skeleton->priv->lock);
+  return value;
+}
+
+static gboolean 
+org_bluez_gatt_characteristic1_skeleton_get_notify_acquired (OrgBluezGattCharacteristic1 *object)
+{
+  OrgBluezGattCharacteristic1Skeleton *skeleton = ORG_BLUEZ_GATT_CHARACTERISTIC1_SKELETON (object);
+  gboolean value;
+  g_mutex_lock (&skeleton->priv->lock);
+  value = g_value_get_boolean (&(skeleton->priv->properties[7]));
+  g_mutex_unlock (&skeleton->priv->lock);
+  return value;
+}
+
 static void
 org_bluez_gatt_characteristic1_skeleton_class_init (OrgBluezGattCharacteristic1SkeletonClass *klass)
 {
@@ -2498,6 +3117,8 @@ org_bluez_gatt_characteristic1_skeleton_iface_init (OrgBluezGattCharacteristic1I
   iface->get_notifying = org_bluez_gatt_characteristic1_skeleton_get_notifying;
   iface->get_flags = org_bluez_gatt_characteristic1_skeleton_get_flags;
   iface->get_descriptors = org_bluez_gatt_characteristic1_skeleton_get_descriptors;
+  iface->get_write_acquired = org_bluez_gatt_characteristic1_skeleton_get_write_acquired;
+  iface->get_notify_acquired = org_bluez_gatt_characteristic1_skeleton_get_notify_acquired;
 }
 
 /**
