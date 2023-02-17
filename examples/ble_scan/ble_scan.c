@@ -114,7 +114,14 @@ static void ble_discovered_device(void *adapter, const char* addr, const char* n
 	int ret;
 
 	int16_t rssi = 0;
- 	gattlib_get_rssi_from_mac(adapter, addr, &rssi);
+	ret =	gattlib_get_rssi_from_mac(adapter, addr, &rssi);
+	if (rssi == 0){
+		ret =	gattlib_get_rssi_from_mac(adapter, addr, &rssi);
+	}
+	if (rssi == 0){
+		ret =	gattlib_get_rssi_from_mac(adapter, addr, &rssi);
+	}
+	printf("ret:%d\n", ret);
 	if (name) {
 		printf("Discovered %s - '%s' | RSSI: %d\n", addr, name, rssi);
 	} else {
@@ -163,37 +170,27 @@ int main(int argc, const char *argv[]) {
 	setlogmask(LOG_UPTO(LOG_INFO));
 #endif
 	LIST_INIT(&g_ble_connections);
-	ret = gattlib_adapter_open(adapter_name, &adapter);
-	if (ret) {
-		GATTLIB_LOG(GATTLIB_ERROR, "Failed to open adapter.");
-		return 1;
-	}
 
 	for (uint8_t i = 1; i <= num_tries; i ++){
 		printf("scan %d\n",i);
+		ret = gattlib_adapter_open(adapter_name, &adapter);
+		if (ret) {
+			GATTLIB_LOG(GATTLIB_ERROR, "Failed to open adapter.");
+			return 1;
+		}
 		pthread_mutex_lock(&g_mutex);
 		ret = gattlib_adapter_scan_enable(adapter, ble_discovered_device, BLE_SCAN_TIMEOUT, NULL /* user_data */);
 		if (ret) {
 			GATTLIB_LOG(GATTLIB_ERROR, "Failed to scan.");
 			goto EXIT;
 		}
-	sleep(1);
-	gattlib_adapter_scan_disable(adapter);
-	pthread_mutex_unlock(&g_mutex);
+		//sleep(5);
+		gattlib_adapter_scan_disable(adapter);
+		//remove the MACs so that we can get another RSSI value
+		pthread_mutex_unlock(&g_mutex);
+		gattlib_adapter_close(adapter);
 	}
 	puts("Scan completed");
-
-	
-
-
-	// Wait for the thread to complete
-	while (g_ble_connections.lh_first != NULL) {
-		struct connection_t* connection = g_ble_connections.lh_first;
-		pthread_join(connection->thread, NULL);
-		LIST_REMOVE(g_ble_connections.lh_first, entries);
-		free(connection->addr);
-		free(connection);
-	}
 
 EXIT:
 	gattlib_adapter_close(adapter);

@@ -1,1 +1,0 @@
-/usr/bin/cc   -Wall -g   CMakeFiles/advertisement_data.dir/advertisement_data.c.o  -o advertisement_data  -L/home/pi/Documents/rpzero_scanner/build/dbus -Wl,-rpath,/home/pi/Documents/rpzero_scanner/build/dbus -rdynamic ../../dbus/libgattlib.so -lglib-2.0 -lgattlib -lglib-2.0 -lgio-2.0 -lgobject-2.0 -lglib-2.0 
