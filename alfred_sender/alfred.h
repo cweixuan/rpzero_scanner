@@ -100,6 +100,8 @@ enum clientmode {
 	CLIENT_CHANGE_BAT_IFACE,
 	CLIENT_SERVER_STATUS,
 	CLIENT_EVENT_MONITOR,
+	CLIENT_SEND_CHAR,
+	CLIENT_STRESS_TEST
 };
 
 struct interface {
@@ -158,6 +160,11 @@ struct globals {
 
 	struct hashtable_t *data_hash;
 	struct hashtable_t *transaction_hash;
+
+	//for stress test lol
+	int stress_val;
+	time_t sent_time;
+	time_t prev_sent_time;
 };
 
 #define debugMalloc(size, num)	malloc(size)
@@ -178,6 +185,7 @@ int alfred_client_request_data(struct globals *globals);
 int alfred_client_set_data(struct globals *globals);
 int alfred_client_modeswitch(struct globals *globals);
 int alfred_client_change_interface(struct globals *globals);
+int alfred_client_send_char(struct globals *globals);
 int alfred_client_change_bat_iface(struct globals *globals);
 int alfred_client_server_status(struct globals *globals);
 int alfred_client_event_monitor(struct globals *globals);
@@ -232,3 +240,9 @@ bool is_valid_ether_addr(uint8_t addr[ETH_ALEN]);
 bool is_iface_disabled(char *iface);
 int ipv4_arp_request(struct interface *interface, const alfred_addr *addr,
 		     struct ether_addr *mac);
+
+			 
+
+int alfred_client_stress(struct globals *globals);
+int alfred_client_cust_send(struct globals *globals, char* send_buf, int send_len);
+int alfred_client_cust_req(struct globals *globals, char* rx_buf, int *rx_len);

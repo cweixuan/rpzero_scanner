@@ -154,11 +154,13 @@ static struct globals *alfred_init(int argc, char *argv[])
 	struct globals *globals;
 	struct option long_options[] = {
 		{"set-data",		required_argument,	NULL,	's'},
-		{"request",		required_argument,	NULL,	'r'},
+		{"request",			required_argument,	NULL,	'r'},
+		{"test-char",		required_argument,	NULL,	'z'},
+		{"stress",			required_argument,	NULL,	'y'},
 		{"interface",		required_argument,	NULL,	'i'},
-		{"master",		no_argument,		NULL,	'm'},
-		{"primary",		no_argument,		NULL,	'm'},
-		{"help",		no_argument,		NULL,	'h'},
+		{"master",			no_argument,		NULL,	'm'},
+		{"primary",			no_argument,		NULL,	'm'},
+		{"help",			no_argument,		NULL,	'h'},
 		{"req-version",		required_argument,	NULL,	'V'},
 		{"modeswitch",		required_argument,	NULL,	'M'},
 		{"change-interface",	required_argument,	NULL,	'I'},
@@ -167,11 +169,11 @@ static struct globals *alfred_init(int argc, char *argv[])
 		{"event-monitor",	no_argument,		NULL,	'E'},
 		{"unix-path",		required_argument,	NULL,	'u'},
 		{"update-command",	required_argument,	NULL,	'c'},
-		{"version",		no_argument,		NULL,	'v'},
-		{"verbose",		no_argument,		NULL,	'd'},
+		{"version",			no_argument,		NULL,	'v'},
+		{"verbose",			no_argument,		NULL,	'd'},
 		{"sync-period",		required_argument,	NULL,	'p'},
-		{"force",		no_argument,		NULL,	'f'},
-		{NULL,			0,			NULL,	0},
+		{"force",			no_argument,		NULL,	'f'},
+		{NULL,				0,			NULL,	0},
 	};
 
 	ret = reduce_capabilities();
@@ -200,7 +202,7 @@ static struct globals *alfred_init(int argc, char *argv[])
 
 	time_random_seed();
 
-	while ((opt = getopt_long(argc, argv, "ms:r:hi:b:vV:M:I:B:SEu:dc:p:4:f", long_options,
+	while ((opt = getopt_long(argc, argv, "msz:y:r:hi:b:vV:M:I:B:SEu:dc:p:4:f", long_options,
 				  &opt_ind)) != -1) {
 		switch (opt) {
 		case 'r':
@@ -216,6 +218,27 @@ static struct globals *alfred_init(int argc, char *argv[])
 			break;
 		case 's':
 			globals->clientmode = CLIENT_SET_DATA;
+			i = atoi(optarg);
+			if (i < ALFRED_MAX_RESERVED_TYPE ||
+			    i >= ALFRED_NUM_TYPES) {
+				fprintf(stderr, "bad data type argument\n");
+				return NULL;
+			}
+			globals->clientmode_arg = i;
+			break;
+		case 'y':
+			globals->clientmode = CLIENT_STRESS_TEST;
+			i = atoi(optarg);
+			if (i < ALFRED_MAX_RESERVED_TYPE ||
+			    i >= ALFRED_NUM_TYPES) {
+				fprintf(stderr, "bad data type argument\n");
+				return NULL;
+			}
+			globals->stress_val = 0;
+			globals->clientmode_arg = i;
+			break;
+		case 'z':
+			globals->clientmode = CLIENT_SEND_CHAR;
 			i = atoi(optarg);
 			if (i < ALFRED_MAX_RESERVED_TYPE ||
 			    i >= ALFRED_NUM_TYPES) {
@@ -325,6 +348,8 @@ int main(int argc, char *argv[])
 		return alfred_client_request_data(globals);
 	case CLIENT_SET_DATA:
 		return alfred_client_set_data(globals);
+	case CLIENT_STRESS_TEST:
+		return alfred_client_stress(globals);
 	case CLIENT_MODESWITCH:
 		return alfred_client_modeswitch(globals);
 	case CLIENT_CHANGE_INTERFACE:
@@ -335,6 +360,9 @@ int main(int argc, char *argv[])
 		return alfred_client_server_status(globals);
 	case CLIENT_EVENT_MONITOR:
 		return alfred_client_event_monitor(globals);
+	case CLIENT_SEND_CHAR:
+		printf("segfault doko\n");
+		return alfred_client_send_char(globals);
 	}
 
 	return 0;
