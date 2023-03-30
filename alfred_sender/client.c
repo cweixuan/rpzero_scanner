@@ -256,120 +256,6 @@ int alfred_client_modeswitch(struct globals *globals)
 	return 0;
 }
 
-static int check_interface(const char *iface)
-{
-	int sock = -1;
-	struct ifreq ifr;
-
-	if (strlen(iface) > IFNAMSIZ) {
-		fprintf(stderr, "%s: interface name list too long, not changing\n",
-			__func__);
-		return -1;
-	}
-
-	sock = socket(PF_INET, SOCK_DGRAM, 0);
-	if (sock < 0) {
-		perror("can't open socket");
-		return -1;
-	}
-
-	strncpy(ifr.ifr_name, iface, IFNAMSIZ);
-	ifr.ifr_name[IFNAMSIZ - 1] = '\0';
-	if (ioctl(sock, SIOCGIFINDEX, &ifr) == -1) {
-		fprintf(stderr, "%s: can't find interface, not changing\n",
-			__func__);
-		close(sock);
-		return -1;
-	}
-
-	close(sock);
-
-	return 0;
-}
-
-int alfred_client_change_interface(struct globals *globals)
-{
-	struct alfred_change_interface_v0 change_interface;
-	int ret, len;
-	char *input, *token, *saveptr;
-	size_t interface_len;
-
-	if (unix_sock_open_client(globals))
-		return -1;
-
-	interface_len = strlen(globals->net_iface);
-	if (interface_len > sizeof(change_interface.ifaces)) {
-		fprintf(stderr, "%s: interface name list too long, not changing\n",
-			__func__);
-		return 0;
-	}
-
-	len = sizeof(change_interface);
-
-	change_interface.header.type = ALFRED_CHANGE_INTERFACE;
-	change_interface.header.version = ALFRED_VERSION;
-	change_interface.header.length = FIXED_TLV_LEN(change_interface);
-	strncpy(change_interface.ifaces, globals->net_iface,
-		sizeof(change_interface.ifaces));
-	change_interface.ifaces[sizeof(change_interface.ifaces) - 1] = '\0';
-
-	/* test it before sending
-	 * globals->net_iface is now saved in change_interface.ifaces
-	 * and can be modified by strtok_r
-	 */
-	input = globals->net_iface;
-	while ((token = strtok_r(input, ",", &saveptr))) {
-		input = NULL;
-
-		ret = check_interface(token);
-		if (ret < 0)
-			return 0;
-	}
-
-	ret = write(globals->unix_sock, &change_interface, len);
-	if (ret != len)
-		fprintf(stderr, "%s: only wrote %d of %d bytes: %s\n",
-			__func__, ret, len, strerror(errno));
-
-	unix_sock_close(globals);
-
-	return 0;
-}
-
-int alfred_client_change_bat_iface(struct globals *globals)
-{
-	struct alfred_change_bat_iface_v0 change_bat_iface;
-	int ret, len;
-	size_t interface_len;
-
-	if (unix_sock_open_client(globals))
-		return -1;
-
-	interface_len = strlen(globals->mesh_iface);
-	if (interface_len > sizeof(change_bat_iface.bat_iface)) {
-		fprintf(stderr, "%s: batman-adv interface name list too long, not changing\n",
-			__func__);
-		return 0;
-	}
-
-	len = sizeof(change_bat_iface);
-
-	change_bat_iface.header.type = ALFRED_CHANGE_BAT_IFACE;
-	change_bat_iface.header.version = ALFRED_VERSION;
-	change_bat_iface.header.length = FIXED_TLV_LEN(change_bat_iface);
-	strncpy(change_bat_iface.bat_iface, globals->mesh_iface,
-		sizeof(change_bat_iface.bat_iface));
-	change_bat_iface.bat_iface[sizeof(change_bat_iface.bat_iface) - 1] = '\0';
-
-	ret = write(globals->unix_sock, &change_bat_iface, len);
-	if (ret != len)
-		fprintf(stderr, "%s: only wrote %d of %d bytes: %s\n",
-			__func__, ret, len, strerror(errno));
-
-	unix_sock_close(globals);
-
-	return 0;
-}
 
 int alfred_client_server_status(struct globals *globals)
 {
@@ -497,6 +383,7 @@ err:
 	unix_sock_close(globals);
 	return 0;
 }
+
 
 int alfred_client_event_monitor(struct globals *globals)
 {

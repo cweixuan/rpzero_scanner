@@ -110,9 +110,7 @@ connection_exit:
 }
 
 static void ble_discovered_device(void *adapter, const char* addr, const char* name, void *user_data) {
-	struct connection_t *connection;
 	int ret;
-
 	int16_t rssi = 0;
 	ret =	gattlib_get_rssi_from_mac(adapter, addr, &rssi);
 	if (rssi == 0){
@@ -127,21 +125,7 @@ static void ble_discovered_device(void *adapter, const char* addr, const char* n
 	} else {
 		printf("Discovered %s | RSSI: %d\n", addr,rssi);
 	}
-
-	//connection = malloc(sizeof(struct connection_t));
-	//if (connection == NULL) {
-	//	GATTLIB_LOG(GATTLIB_ERROR, "Failt to allocate connection.");
-	//	return;
-	//}
-	//connection->addr = strdup(addr);
-
-	//ret = pthread_create(&connection->thread, NULL,	ble_connect_device, connection);
-	//if (ret != 0) {
-	//	GATTLIB_LOG(GATTLIB_ERROR, "Failt to create BLE connection thread.");
-	//	free(connection);
-	//	return;
-	//}
-	//LIST_INSERT_HEAD(&g_ble_connections, connection, entries);
+	return;
 }
 
 int main(int argc, const char *argv[]) {
