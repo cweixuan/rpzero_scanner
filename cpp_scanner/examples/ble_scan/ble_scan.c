@@ -125,7 +125,21 @@ static void ble_discovered_device(void *adapter, const char* addr, const char* n
 	} else {
 		printf("Discovered %s | RSSI: %d\n", addr,rssi);
 	}
-	return;
+
+	//connection = malloc(sizeof(struct connection_t));
+	//if (connection == NULL) {
+	//	GATTLIB_LOG(GATTLIB_ERROR, "Failt to allocate connection.");
+	//	return;
+	//}
+	//connection->addr = strdup(addr);
+
+	//ret = pthread_create(&connection->thread, NULL,	ble_connect_device, connection);
+	//if (ret != 0) {
+	//	GATTLIB_LOG(GATTLIB_ERROR, "Failt to create BLE connection thread.");
+	//	free(connection);
+	//	return;
+	//}
+	//LIST_INSERT_HEAD(&g_ble_connections, connection, entries);
 }
 
 int main(int argc, const char *argv[]) {
