@@ -188,6 +188,69 @@ int data_update_thread_func(struct bt_globals *bt_globals){
 	}
 }
 
+int unix_sock_open_client(struct globals *globals)
+{
+	struct sockaddr_un addr;
+
+	globals->unix_sock = socket(AF_LOCAL, SOCK_STREAM, 0);
+	if (globals->unix_sock < 0) {
+		perror("can't create unix socket");
+		return -1;
+	}
+
+	memset(&addr, 0, sizeof(addr));
+	addr.sun_family = AF_LOCAL;
+	strncpy(addr.sun_path, globals->unix_path, sizeof(addr.sun_path));
+	addr.sun_path[sizeof(addr.sun_path) - 1] = '\0';
+
+	if (connect(globals->unix_sock, (struct sockaddr *)&addr,
+		    sizeof(addr)) < 0) {
+		close(globals->unix_sock);
+		globals->unix_sock = -1;
+		perror("can't connect to unix socket");
+		return -1;
+	}
+
+	return 0;
+}
+
+int alfred_client_cust_send(struct globals *globals, char* send_buf, int send_len)
+{
+	unsigned char buf[MAX_PAYLOAD];
+	struct alfred_push_data_v0 *push;
+	struct alfred_data *data;
+	int ret, len;
+
+	if (unix_sock_open_client(globals))
+		return -1;
+
+	push = (struct alfred_push_data_v0 *)buf;
+	data = push->data;
+	len = sizeof(*push) + sizeof(*data);
+	memcpy(&buf[len], send_buf, send_len);
+	len+= send_len;
+
+	push->header.type = ALFRED_PUSH_DATA;
+	push->header.version = ALFRED_VERSION;
+	push->header.length = htons(len - sizeof(push->header));
+	push->tx.id = get_random_id();
+	push->tx.seqno = htons(0);
+
+	/* we leave data->source "empty" */
+	memset(data->source, 0, sizeof(data->source));
+	data->header.type = globals->clientmode_arg;
+	data->header.version = globals->clientmode_version;
+	data->header.length = htons(len - sizeof(*push) - sizeof(*data));
+
+	ret = write(globals->unix_sock, buf, len);
+	if (ret != len)
+		fprintf(stderr, "%s: only wrote %d of %d bytes: %s\n",
+			__func__, ret, len, strerror(errno));
+	globals->prev_sent_time = time(0);
+	unix_sock_close(globals);
+	return 0;
+}
+
 int main(int argc, char argv[]){
 	 pthread_t pt_bt_thread;
 	 pthread_t test_thread;
@@ -202,6 +265,7 @@ int main(int argc, char argv[]){
 		perror("pthread_create() error");
 		exit(1);
 	}
+
 
 	if (pthread_join(pt_bt_thread, &ret) != 0) {
 		perror("pthread_create() error");
