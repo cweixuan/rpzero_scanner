@@ -132,7 +132,7 @@ scanner_alfred/clean: scanner_alfred/CMakeFiles/ble_scanner.dir/clean
 dbus/CMakeFiles/gattlib.dir/all:
 	$(MAKE) $(MAKESILENT) -f dbus/CMakeFiles/gattlib.dir/build.make dbus/CMakeFiles/gattlib.dir/depend
 	$(MAKE) $(MAKESILENT) -f dbus/CMakeFiles/gattlib.dir/build.make dbus/CMakeFiles/gattlib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/CMakeFiles --progress-num=6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28 "Built target gattlib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/CMakeFiles --progress-num=7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29 "Built target gattlib"
 .PHONY : dbus/CMakeFiles/gattlib.dir/all
 
 # Build rule for subdir invocation for target.
@@ -159,12 +159,12 @@ dbus/CMakeFiles/gattlib.dir/clean:
 scanner_alfred/CMakeFiles/ble_scanner.dir/all: dbus/CMakeFiles/gattlib.dir/all
 	$(MAKE) $(MAKESILENT) -f scanner_alfred/CMakeFiles/ble_scanner.dir/build.make scanner_alfred/CMakeFiles/ble_scanner.dir/depend
 	$(MAKE) $(MAKESILENT) -f scanner_alfred/CMakeFiles/ble_scanner.dir/build.make scanner_alfred/CMakeFiles/ble_scanner.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target ble_scanner"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target ble_scanner"
 .PHONY : scanner_alfred/CMakeFiles/ble_scanner.dir/all
 
 # Build rule for subdir invocation for target.
 scanner_alfred/CMakeFiles/ble_scanner.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/CMakeFiles 28
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/CMakeFiles 29
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 scanner_alfred/CMakeFiles/ble_scanner.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/CMakeFiles 0
 .PHONY : scanner_alfred/CMakeFiles/ble_scanner.dir/rule

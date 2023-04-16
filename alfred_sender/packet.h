@@ -10,8 +10,14 @@
 #define _ALFRED_PACKET_H
 
 #include <net/if.h>	/* IFNAMSIZ */
+#include <net/ethernet.h>
 
 #define __packed __attribute__ ((packed))
+
+#ifndef ETH_ALEN
+#define ETH_ALEN	6		/* from <net/ethernet.h> */
+#endif
+
 
 /* basic blocks */
 

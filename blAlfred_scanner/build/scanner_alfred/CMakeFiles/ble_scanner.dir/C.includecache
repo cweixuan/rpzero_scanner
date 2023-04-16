@@ -20,6 +20,16 @@ bluetooth/sdp_lib.h
 
 ../scanner_alfred/inc/ble_scanner.h
 
+../scanner_alfred/inc/client.h
+net/if.h
+-
+net/ethernet.h
+-
+netinet/udp.h
+-
+sys/types.h
+-
+
 ../scanner_alfred/inc/deque.h
 stdint.h
 -
@@ -59,4 +69,6 @@ time.h
 /home/notpi/Documents/rpzero_scanner/blAlfred_scanner/scanner_alfred/src/time.h
 hashtable.h
 /home/notpi/Documents/rpzero_scanner/blAlfred_scanner/scanner_alfred/src/hashtable.h
+client.h
+/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/scanner_alfred/src/client.h
 

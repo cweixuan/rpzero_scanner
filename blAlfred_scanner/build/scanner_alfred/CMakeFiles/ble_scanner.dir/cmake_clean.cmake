@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/ble_scanner.dir/src/arraylist.c.o"
   "CMakeFiles/ble_scanner.dir/src/ble_scanner.c.o"
+  "CMakeFiles/ble_scanner.dir/src/client.c.o"
   "CMakeFiles/ble_scanner.dir/src/deque.c.o"
   "CMakeFiles/ble_scanner.dir/src/hashtable.c.o"
   "ble_scanner"

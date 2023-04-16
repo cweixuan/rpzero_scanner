@@ -13,6 +13,10 @@
 #endif
 
 #define ALFRED_SOCK_PATH_DEFAULT	"/var/run/alfred.sock"
+#define __packed __attribute__ ((packed))
+#ifndef ETH_ALEN
+#define ETH_ALEN	6		/* from <net/ethernet.h> */
+#endif
 
 enum alfred_packet_type {
 	ALFRED_PUSH_DATA = 0,
@@ -41,11 +45,26 @@ enum clientmode {
 	CLIENT_STRESS_TEST
 };
 
-struct alfred_push_data_v0 {
-	struct alfred_tlv header;
-	struct alfred_transaction_mgmt tx;
-	/* flexible data block */
-	__extension__  struct alfred_data data[0];
+/**
+ * struct alfred_tlv - Type (Version) Length part of a TLV
+ * @type: Type of the data
+ * @version: Version of the data
+ * @length: Length of the data without the alfred_tlv header
+ */
+struct alfred_tlv {
+	uint8_t type;
+	uint8_t version;
+	uint16_t length;
+} __packed;
+
+/**
+ * struct alfred_transaction_mgmt - Transaction Mgmt block for multiple packets
+ * @id: random identificator used for this transaction
+ * @seqno: Number of packet inside a transaction
+ */
+struct alfred_transaction_mgmt {
+	uint16_t id;
+	uint16_t seqno;
 } __packed;
 
 struct alfred_data {
@@ -55,7 +74,12 @@ struct alfred_data {
 	__extension__ uint8_t data[0];
 } __packed;
 
-#define MAX_PAYLOAD ((1 << 16) - 1 - sizeof(struct udphdr))
+struct alfred_push_data_v0 {
+	struct alfred_tlv header;
+	struct alfred_transaction_mgmt tx;
+	/* flexible data block */
+	__extension__  struct alfred_data data[0];
+} __packed;
 
 #define ALFRED_VERSION			0
 #define ALFRED_PORT			0x4242

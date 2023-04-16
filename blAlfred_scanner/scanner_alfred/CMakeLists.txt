@@ -7,8 +7,6 @@ pkg_search_module(PCRE REQUIRED libpcre)
 
 set(ble_scanner_HDRS inc/arraylist.h 
 inc/ble_scanner.h 
-inc/packet.h 
-inc/ble_scanner.h 
 inc/deque.h 
 inc/hashtable.h 
 inc/alfred.h 

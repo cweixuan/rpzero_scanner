@@ -17,7 +17,14 @@
 #include <net/if.h>
 #include <stddef.h>
 #include <sys/socket.h>
+#include <sys/un.h>
+
+#include <netinet/ether.h>
+#include <stdbool.h>
+#include <stdlib.h>
 #include <sys/time.h>
+#include <time.h>
+#include "client.h"
 #include "alfred.h"
 
 
@@ -59,7 +66,7 @@ int unix_sock_close(int* alfred_socket)
 
 int alfred_send_data(char* send_buf, int send_len)
 {
-	int alfred_socket
+	int alfred_socket;
 	unsigned char buf[MAX_PAYLOAD];
 	struct alfred_push_data_v0 *push;
 	struct alfred_data *data;
@@ -74,6 +81,7 @@ int alfred_send_data(char* send_buf, int send_len)
 	memcpy(&buf[len], send_buf, send_len);
 	len+= send_len;
 
+	//data ID
 	push->header.type = ALFRED_PUSH_DATA;
 	push->header.version = ALFRED_VERSION;
 	push->header.length = htons(len - sizeof(push->header));
@@ -82,7 +90,7 @@ int alfred_send_data(char* send_buf, int send_len)
 
 	/* we leave data->source "empty" */
 	memset(data->source, 0, sizeof(data->source));
-	data->header.type = CLIENT_SET_DATA;
+	data->header.type = 65;
 	data->header.version = 0;
 	data->header.length = htons(len - sizeof(*push) - sizeof(*data));
 

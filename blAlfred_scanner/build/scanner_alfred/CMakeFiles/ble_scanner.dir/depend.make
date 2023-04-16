@@ -7,9 +7,14 @@ scanner_alfred/CMakeFiles/ble_scanner.dir/src/arraylist.c.o: ../scanner_alfred/s
 scanner_alfred/CMakeFiles/ble_scanner.dir/src/ble_scanner.c.o: ../include/gattlib.h
 scanner_alfred/CMakeFiles/ble_scanner.dir/src/ble_scanner.c.o: ../scanner_alfred/inc/arraylist.h
 scanner_alfred/CMakeFiles/ble_scanner.dir/src/ble_scanner.c.o: ../scanner_alfred/inc/ble_scanner.h
+scanner_alfred/CMakeFiles/ble_scanner.dir/src/ble_scanner.c.o: ../scanner_alfred/inc/client.h
 scanner_alfred/CMakeFiles/ble_scanner.dir/src/ble_scanner.c.o: ../scanner_alfred/inc/deque.h
 scanner_alfred/CMakeFiles/ble_scanner.dir/src/ble_scanner.c.o: ../scanner_alfred/inc/hashtable.h
 scanner_alfred/CMakeFiles/ble_scanner.dir/src/ble_scanner.c.o: ../scanner_alfred/src/ble_scanner.c
+
+scanner_alfred/CMakeFiles/ble_scanner.dir/src/client.c.o: ../scanner_alfred/inc/alfred.h
+scanner_alfred/CMakeFiles/ble_scanner.dir/src/client.c.o: ../scanner_alfred/inc/client.h
+scanner_alfred/CMakeFiles/ble_scanner.dir/src/client.c.o: ../scanner_alfred/src/client.c
 
 scanner_alfred/CMakeFiles/ble_scanner.dir/src/deque.c.o: ../scanner_alfred/inc/deque.h
 scanner_alfred/CMakeFiles/ble_scanner.dir/src/deque.c.o: ../scanner_alfred/src/deque.c

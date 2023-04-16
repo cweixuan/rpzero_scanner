@@ -6,6 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/scanner_alfred/src/arraylist.c" "/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/scanner_alfred/CMakeFiles/ble_scanner.dir/src/arraylist.c.o"
   "/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/scanner_alfred/src/ble_scanner.c" "/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/scanner_alfred/CMakeFiles/ble_scanner.dir/src/ble_scanner.c.o"
+  "/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/scanner_alfred/src/client.c" "/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/scanner_alfred/CMakeFiles/ble_scanner.dir/src/client.c.o"
   "/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/scanner_alfred/src/deque.c" "/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/scanner_alfred/CMakeFiles/ble_scanner.dir/src/deque.c.o"
   "/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/scanner_alfred/src/hashtable.c" "/home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build/scanner_alfred/CMakeFiles/ble_scanner.dir/src/hashtable.c.o"
   )

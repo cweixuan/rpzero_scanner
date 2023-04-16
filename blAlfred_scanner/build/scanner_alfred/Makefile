@@ -266,6 +266,33 @@ src/ble_scanner.c.s:
 	cd /home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build && $(MAKE) $(MAKESILENT) -f scanner_alfred/CMakeFiles/ble_scanner.dir/build.make scanner_alfred/CMakeFiles/ble_scanner.dir/src/ble_scanner.c.s
 .PHONY : src/ble_scanner.c.s
 
+src/client.o: src/client.c.o
+
+.PHONY : src/client.o
+
+# target to build an object file
+src/client.c.o:
+	cd /home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build && $(MAKE) $(MAKESILENT) -f scanner_alfred/CMakeFiles/ble_scanner.dir/build.make scanner_alfred/CMakeFiles/ble_scanner.dir/src/client.c.o
+.PHONY : src/client.c.o
+
+src/client.i: src/client.c.i
+
+.PHONY : src/client.i
+
+# target to preprocess a source file
+src/client.c.i:
+	cd /home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build && $(MAKE) $(MAKESILENT) -f scanner_alfred/CMakeFiles/ble_scanner.dir/build.make scanner_alfred/CMakeFiles/ble_scanner.dir/src/client.c.i
+.PHONY : src/client.c.i
+
+src/client.s: src/client.c.s
+
+.PHONY : src/client.s
+
+# target to generate assembly for a file
+src/client.c.s:
+	cd /home/notpi/Documents/rpzero_scanner/blAlfred_scanner/build && $(MAKE) $(MAKESILENT) -f scanner_alfred/CMakeFiles/ble_scanner.dir/build.make scanner_alfred/CMakeFiles/ble_scanner.dir/src/client.c.s
+.PHONY : src/client.c.s
+
 src/deque.o: src/deque.c.o
 
 .PHONY : src/deque.o
@@ -341,6 +368,9 @@ help:
 	@echo "... src/ble_scanner.o"
 	@echo "... src/ble_scanner.i"
 	@echo "... src/ble_scanner.s"
+	@echo "... src/client.o"
+	@echo "... src/client.i"
+	@echo "... src/client.s"
 	@echo "... src/deque.o"
 	@echo "... src/deque.i"
 	@echo "... src/deque.s"
