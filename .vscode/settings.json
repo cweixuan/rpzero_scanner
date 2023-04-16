@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "gattlib.h": "c"
+        "gattlib.h": "c",
+        "deque.h": "c"
     }
 }

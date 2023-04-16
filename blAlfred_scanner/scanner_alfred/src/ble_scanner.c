@@ -7,6 +7,7 @@
 #include <sys/queue.h>
 #include <unistd.h>
 #include "gattlib.h"
+#include "alfred.h"
 #include "arraylist.h"
 #include "ble_scanner.h"
 #include "deque.h"
@@ -186,6 +187,11 @@ int data_update_thread_func(struct bt_globals *bt_globals){
 		}
 		sleep(10);
 	}
+}
+
+uint16_t get_random_id(void)
+{
+	return random();
 }
 
 int unix_sock_open_client(struct globals *globals)
