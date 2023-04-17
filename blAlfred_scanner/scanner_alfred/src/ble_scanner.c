@@ -89,6 +89,7 @@ static void ble_discovered_device(void *adapter, const char* addr, const char* n
 	// printf("Discovered %6lx | RSSI: %d\n", mac_addr,rssi);
 	bt_data_pack(temp, mac_addr, rssi, time(NULL));
 	deque_append(g_bt_data_deque, temp);
+		// printf("pong\n");
 
 }
 
@@ -146,7 +147,7 @@ int data_update_thread_func(struct bt_globals *bt_globals){
 	//inser tstuff lol
 	while (1){
 		if (g_bt_data_deque != NULL){
-		pthread_mutex_lock(&bt_mutex);
+			pthread_mutex_lock(&bt_mutex);
 			while (deque_count(g_bt_data_deque)){
 				bt_data_t *temp = deque_pop(g_bt_data_deque);
 				if (temp != NULL){
@@ -163,31 +164,31 @@ int data_update_thread_func(struct bt_globals *bt_globals){
 					free(temp);
 				}
 			}
-		pthread_mutex_unlock(&bt_mutex);
-		uint64_t* curr_addr;
-		time_t current_time = time(NULL);
-		char tx_buf[MAX_PAYLOAD];
-		int tx_len = 0;
-		for (int i =0; i < key_list->size; i ++){
-			curr_addr = arraylist_get(key_list,i);
-			if (curr_addr != NULL){
-				bt_data_t *data_temp;
-				data_temp = ht_lookup(data_table, curr_addr);
-				if (data_temp != NULL){
-					//check if last datapoint was > 1h ago
-					if ( current_time - data_temp->time > 3600 ){
-						arraylist_remove(key_list,i);
-						ht_erase(data_table,curr_addr);
-						free(curr_addr);
-					} else {
-						printf("Discovered %6lx | RSSI: %d at Time: %s", 
-						data_temp->mac_addr,data_temp->rssi, ctime(&data_temp->time));
-						tx_len += sprintf(tx_buf+tx_len,"Discovered %6lx | RSSI: %d at Time: %s \n||", 
-						data_temp->mac_addr,data_temp->rssi, ctime(&data_temp->time));
+			pthread_mutex_unlock(&bt_mutex);
+			uint64_t* curr_addr;
+			char tx_buf[MAX_PAYLOAD];
+			int tx_len = 0;
+			time_t current_time = time(NULL);
+			for (int i =0; i < key_list->size; i ++){
+				curr_addr = arraylist_get(key_list,i);
+				if (curr_addr != NULL){
+					bt_data_t *data_temp;
+					data_temp = ht_lookup(data_table, curr_addr);
+					if (data_temp != NULL){
+						//check if last datapoint was > 1h ago
+						if ( current_time - data_temp->time > 3600 ){
+							arraylist_remove(key_list,i);
+							ht_erase(data_table,curr_addr);
+							free(curr_addr);
+						} else {
+							printf("Discovered %6lx | RSSI: %d at Time: %s", 
+							data_temp->mac_addr,data_temp->rssi, ctime(&data_temp->time));
+							tx_len += sprintf(tx_buf+tx_len,"Discovered %6lx | RSSI: %d at Time: %s \n||", 
+							data_temp->mac_addr,data_temp->rssi, ctime(&data_temp->time));
+						}
 					}
 				}
 			}
-		}
 		alfred_send_data(tx_buf, tx_len);
 		}
 		sleep(10);

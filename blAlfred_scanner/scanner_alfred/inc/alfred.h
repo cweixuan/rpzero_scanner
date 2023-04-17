@@ -81,6 +81,12 @@ struct alfred_push_data_v0 {
 	__extension__  struct alfred_data data[0];
 } __packed;
 
+struct alfred_request_v0 {
+	struct alfred_tlv header;
+	uint8_t requested_type;
+	uint16_t tx_id;
+} __packed;
+
 #define ALFRED_VERSION			0
 #define ALFRED_PORT			0x4242
 #define ALFRED_MAX_RESERVED_TYPE	64
