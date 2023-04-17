@@ -93,12 +93,12 @@ clean: CMakeFiles/alfredRX.dir/clean
 CMakeFiles/alfredRX.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/notpi/Documents/rpzero_scanner/alfred_rx/build/CMakeFiles --progress-num=1,2 "Built target alfredRX"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/notpi/Documents/rpzero_scanner/alfred_rx/build/CMakeFiles --progress-num=1,2,3 "Built target alfredRX"
 .PHONY : CMakeFiles/alfredRX.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/alfredRX.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/notpi/Documents/rpzero_scanner/alfred_rx/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/notpi/Documents/rpzero_scanner/alfred_rx/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/alfredRX.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/notpi/Documents/rpzero_scanner/alfred_rx/build/CMakeFiles 0
 .PHONY : CMakeFiles/alfredRX.dir/rule

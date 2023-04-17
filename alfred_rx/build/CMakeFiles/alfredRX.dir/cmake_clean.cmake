@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/alfredRX.dir/src/alfredRX.cpp.o"
+  "CMakeFiles/alfredRX.dir/src/client.cpp.o"
   "alfredRX"
   "alfredRX.pdb"
 )

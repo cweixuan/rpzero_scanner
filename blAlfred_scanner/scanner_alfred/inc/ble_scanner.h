@@ -10,6 +10,13 @@ typedef struct bt_data_t {
     time_t time;
 }bt_data_t;
 
+typedef struct bt_packed_data_t{
+    uint64_t mac_addr;
+    uint64_t time;
+    int16_t rssi;
+
+} bt_packed_data_t __attribute__ ((packed));
+
 // int alfred_client_poll(struct globals *globals);
 
 

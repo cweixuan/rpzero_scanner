@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 2.8.12)
 project(AlfredRX)
 
-set(alfredRX_HDRS inc/alfredRX.h)
-set(alfredRX_SRCS src/alfredRX.cpp)
+set(alfredRX_HDRS inc/alfredRX.h
+inc/alfred.h
+inc/client.h)
+set(alfredRX_SRCS src/alfredRX.cpp
+src/client.cpp)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/inc/)
 add_executable(alfredRX ${alfredRX_HDRS} ${alfredRX_SRCS})

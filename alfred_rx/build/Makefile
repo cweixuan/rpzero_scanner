@@ -169,6 +169,33 @@ src/alfredRX.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/src/alfredRX.cpp.s
 .PHONY : src/alfredRX.cpp.s
 
+src/client.o: src/client.cpp.o
+
+.PHONY : src/client.o
+
+# target to build an object file
+src/client.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/src/client.cpp.o
+.PHONY : src/client.cpp.o
+
+src/client.i: src/client.cpp.i
+
+.PHONY : src/client.i
+
+# target to preprocess a source file
+src/client.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/src/client.cpp.i
+.PHONY : src/client.cpp.i
+
+src/client.s: src/client.cpp.s
+
+.PHONY : src/client.s
+
+# target to generate assembly for a file
+src/client.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/src/client.cpp.s
+.PHONY : src/client.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -181,6 +208,9 @@ help:
 	@echo "... src/alfredRX.o"
 	@echo "... src/alfredRX.i"
 	@echo "... src/alfredRX.s"
+	@echo "... src/client.o"
+	@echo "... src/client.i"
+	@echo "... src/client.s"
 .PHONY : help
 
 

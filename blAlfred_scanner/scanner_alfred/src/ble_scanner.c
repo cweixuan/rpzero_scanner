@@ -93,7 +93,7 @@ static void ble_discovered_device(void *adapter, const char* addr, const char* n
 
 }
 
-int bt_thread_func(struct bt_globals *bt_globals) {
+int bt_thread_func() {
 	const char* adapter_name;
 	void* adapter;
 	int ret;
@@ -109,7 +109,7 @@ int bt_thread_func(struct bt_globals *bt_globals) {
 			return 1;
 		}
 		pthread_mutex_lock(&bt_mutex);
-		ret = gattlib_adapter_scan_enable(adapter, ble_discovered_device, BLE_SCAN_TIMEOUT, bt_globals /* user_data */);
+		ret = gattlib_adapter_scan_enable(adapter, ble_discovered_device, BLE_SCAN_TIMEOUT, NULL /* user_data */);
 		if (ret) {
 			GATTLIB_LOG(GATTLIB_ERROR, "Failed to scan.");
 			goto EXIT;
@@ -127,7 +127,7 @@ EXIT:
 }
 
 
-int data_update_thread_func(struct bt_globals *bt_globals){
+int data_update_thread_func(){
 	//setup deque for data
 	g_bt_data_deque = deque_create(NULL);
 	if (g_bt_data_deque == NULL){
@@ -168,23 +168,32 @@ int data_update_thread_func(struct bt_globals *bt_globals){
 			uint64_t* curr_addr;
 			char tx_buf[MAX_PAYLOAD];
 			int tx_len = 0;
+			uint16_t num_vals = key_list->size;
+			memcpy(tx_buf, &num_vals, sizeof(uint16_t));
+			tx_len += sizeof(uint16_t);
 			time_t current_time = time(NULL);
 			for (int i =0; i < key_list->size; i ++){
 				curr_addr = arraylist_get(key_list,i);
 				if (curr_addr != NULL){
 					bt_data_t *data_temp;
+					bt_packed_data_t temp_send_data;
 					data_temp = ht_lookup(data_table, curr_addr);
 					if (data_temp != NULL){
+						temp_send_data.mac_addr = data_temp->mac_addr;
+						temp_send_data.rssi = data_temp->rssi;
+						temp_send_data.time = data_temp->time;
 						//check if last datapoint was > 1h ago
-						if ( current_time - data_temp->time > 3600 ){
+						printf("Discovered %6lx | RSSI: %d at Time: %s", 
+						data_temp->mac_addr,data_temp->rssi, ctime(&data_temp->time));
+						memcpy(tx_buf+tx_len, &temp_send_data, sizeof(bt_packed_data_t));
+						tx_len += sizeof(bt_packed_data_t);
+						// tx_len += sprintf(tx_buf+tx_len,"Discovered %6lx | RSSI: %d at Time: %s \n||", 
+						// data_temp->mac_addr,data_temp->rssi, ctime(&data_temp->time));
+
+						if ( current_time - data_temp->time > 30 ){
 							arraylist_remove(key_list,i);
 							ht_erase(data_table,curr_addr);
 							free(curr_addr);
-						} else {
-							printf("Discovered %6lx | RSSI: %d at Time: %s", 
-							data_temp->mac_addr,data_temp->rssi, ctime(&data_temp->time));
-							tx_len += sprintf(tx_buf+tx_len,"Discovered %6lx | RSSI: %d at Time: %s \n||", 
-							data_temp->mac_addr,data_temp->rssi, ctime(&data_temp->time));
 						}
 					}
 				}

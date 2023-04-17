@@ -26,6 +26,7 @@
 #include <time.h>
 #include "client.h"
 #include "alfred.h"
+#include "alfredRX.h"
 
 
 uint16_t get_random_id(void)
@@ -105,6 +106,7 @@ int alfred_send_data(int data_id,char* send_buf, int send_len)
 	return 0;
 }
 
+
 int alfred_req_data(int data_id, char* rx_buf, int *rx_len)
 {
 	
@@ -136,6 +138,7 @@ int alfred_req_data(int data_id, char* rx_buf, int *rx_len)
 
 	push = (struct alfred_push_data_v0 *)buf;
 	tlv = (struct alfred_tlv *)buf;
+	
 	while ((ret = read(alfred_socket, buf, sizeof(*tlv))) > 0) {
 		if (ret < (int)sizeof(*tlv))
 			break;
@@ -184,16 +187,30 @@ int alfred_req_data(int data_id, char* rx_buf, int *rx_len)
 		//        data->source[2], data->source[3],
 		//        data->source[4], data->source[5]);
 
-		int max_len = *rx_len;
+		int max_len = MAX_PAYLOAD;
 		*rx_len = 0;
 
 		for (i = 0; i < data_len; i++) {
-			if (*rx_len < max_len){
-				rx_buf[*rx_len] = pos[i];
-				*rx_len +=1;
-			} else {
+			rx_buf[*rx_len] = pos[i];
+			*rx_len +=1;
+		}
+		//rxbuf temp processing
+		bt_packed_data_t temp_packed;
+		uint16_t num_vals = 0;
+		memcpy(&num_vals, rx_buf, sizeof(uint16_t));
+		uint32_t curr_len = 2;
+		printf("Number of MACs detected: %d\n",num_vals);
+		printf("%d | %d\n", sizeof(bt_packed_data_t), data_len);
+		for (uint32_t i =0; i < num_vals; i ++){
+			if(data_len  - curr_len < sizeof(bt_packed_data_t)) {
+				printf("why is there not enough data here >:()\n");
 				break;
 			}
+			memcpy(&temp_packed, rx_buf+curr_len, sizeof(bt_packed_data_t));
+			curr_len += sizeof(bt_packed_data_t);
+			printf("Discovered %6x | RSSI: %d | at time %ld\n",
+			temp_packed.mac_addr, temp_packed.rssi,temp_packed.time);
+
 		}
 	}
 	unix_sock_close(&alfred_socket);
@@ -202,7 +219,7 @@ int alfred_req_data(int data_id, char* rx_buf, int *rx_len)
 
 recv_err:
 	/* read the rest of the status message */
-	ret = read(&alfred_socket, buf + sizeof(*tlv),
+	ret = read(alfred_socket, buf + sizeof(*tlv),
 		   sizeof(*status) - sizeof(*tlv));
 
 	/* too short */
@@ -220,7 +237,7 @@ int alfred_send_ble_data(char* send_buf, int send_len){
 	return alfred_send_data(65,send_buf,send_len);
 }
 
-int alfred_req_ble_data(char* rx_buf){
-	return alfred_req_data(65,rx_buf);
+int alfred_req_ble_data(char* rx_buf, int* rx_len){
+	return alfred_req_data(65,rx_buf, rx_len);
 }
 

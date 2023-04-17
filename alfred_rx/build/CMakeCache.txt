@@ -14,6 +14,12 @@
 # EXTERNAL cache entries
 ########################
 
+//Value Computed by CMake
+AlfredRX_BINARY_DIR:STATIC=/home/notpi/Documents/rpzero_scanner/alfred_rx/build
+
+//Value Computed by CMake
+AlfredRX_SOURCE_DIR:STATIC=/home/notpi/Documents/rpzero_scanner/alfred_rx
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -145,7 +151,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=Project
+CMAKE_PROJECT_NAME:STATIC=AlfredRX
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
