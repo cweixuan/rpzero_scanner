@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/notpi/Documents/rpzero_scanner/alfred_rx/src/alfredRX.cpp" "/home/notpi/Documents/rpzero_scanner/alfred_rx/build/CMakeFiles/alfredRX.dir/src/alfredRX.cpp.o"
-  "/home/notpi/Documents/rpzero_scanner/alfred_rx/src/client.cpp" "/home/notpi/Documents/rpzero_scanner/alfred_rx/build/CMakeFiles/alfredRX.dir/src/client.cpp.o"
+  "/home/notpi/Documents/rpzero_scanner/alfred_rx/src/alfredRX.cpp" "/home/notpi/Documents/rpzero_scanner/alfred_rx/build/CMakeFiles/AlfredRX.dir/src/alfredRX.cpp.o"
+  "/home/notpi/Documents/rpzero_scanner/alfred_rx/src/client.cpp" "/home/notpi/Documents/rpzero_scanner/alfred_rx/build/CMakeFiles/AlfredRX.dir/src/client.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

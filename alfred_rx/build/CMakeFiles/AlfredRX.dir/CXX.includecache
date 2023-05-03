@@ -45,6 +45,10 @@ sys/socket.h
 -
 sys/un.h
 -
+iomanip
+-
+string_view
+-
 netinet/ether.h
 -
 stdbool.h
@@ -54,6 +58,10 @@ stdlib.h
 sys/time.h
 -
 time.h
+-
+sw/redis++/redis++.h
+-
+iostream
 -
 client.h
 /home/notpi/Documents/rpzero_scanner/alfred_rx/src/client.h

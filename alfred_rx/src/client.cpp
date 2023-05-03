@@ -18,12 +18,16 @@
 #include <stddef.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <iomanip>
+#include <string_view>
 
 #include <netinet/ether.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <sys/time.h>
 #include <time.h>
+#include <sw/redis++/redis++.h>
+#include <iostream>
 #include "client.h"
 #include "alfred.h"
 #include "alfredRX.h"
@@ -66,50 +70,16 @@ int unix_sock_close(int* alfred_socket)
 	return 0;
 }
 
-
-
-int alfred_send_data(int data_id,char* send_buf, int send_len)
+template< typename T >
+std::string int_to_hex( T i )
 {
-	int alfred_socket;
-	unsigned char buf[MAX_PAYLOAD];
-	struct alfred_push_data_v0 *push;
-	struct alfred_data *data;
-	int ret, len;
-
-	if (unix_sock_open_client(&alfred_socket))
-		return -1;
-
-	push = (struct alfred_push_data_v0 *)buf;
-	data = push->data;
-	len = sizeof(*push) + sizeof(*data);
-	memcpy(&buf[len], send_buf, send_len);
-	len+= send_len;
-
-	//data ID
-	push->header.type = ALFRED_PUSH_DATA;
-	push->header.version = ALFRED_VERSION;
-	push->header.length = htons(len - sizeof(push->header));
-	push->tx.id = get_random_id();
-	push->tx.seqno = htons(0);
-
-	/* we leave data->source "empty" */
-	memset(data->source, 0, sizeof(data->source));
-	data->header.type = 65;
-	data->header.version = 0;
-	data->header.length = htons(len - sizeof(*push) - sizeof(*data));
-
-	ret = write(alfred_socket, buf, len);
-	if (ret != len)
-		fprintf(stderr, "%s: only wrote %d of %d bytes: %s\n",
-			__func__, ret, len, strerror(errno));
-	unix_sock_close(&alfred_socket);
-	return 0;
+  std::stringstream stream;
+  stream << std::hex << i;
+  return stream.str();
 }
 
-
-int alfred_req_data(int data_id, char* rx_buf, int *rx_len)
+int alfred_req_data_redis(int data_id, sw::redis::Redis &redis)
 {
-	
 	int alfred_socket;
 	unsigned char buf[MAX_PAYLOAD], *pos;
 	struct alfred_request_v0 request;
@@ -138,13 +108,16 @@ int alfred_req_data(int data_id, char* rx_buf, int *rx_len)
 
 	push = (struct alfred_push_data_v0 *)buf;
 	tlv = (struct alfred_tlv *)buf;
+
+	std::unordered_map<uint64_t,std::vector<std::pair<std::string,std::string>>> data_map;
 	
 	while ((ret = read(alfred_socket, buf, sizeof(*tlv))) > 0) {
 		if (ret < (int)sizeof(*tlv))
 			break;
 
 		if (tlv->type == ALFRED_STATUS_ERROR)
-			goto recv_err;
+			// goto recv_err;
+			return -1;
 
 		if (tlv->type != ALFRED_PUSH_DATA)
 			break;
@@ -186,18 +159,13 @@ int alfred_req_data(int data_id, char* rx_buf, int *rx_len)
 		//        data->source[0], data->source[1],
 		//        data->source[2], data->source[3],
 		//        data->source[4], data->source[5]);
-
-		int max_len = MAX_PAYLOAD;
-		*rx_len = 0;
-
-		for (i = 0; i < data_len; i++) {
-			rx_buf[*rx_len] = pos[i];
-			*rx_len +=1;
-		}
+		uint64_t src_macaddr = (uint64_t)data->source[0] << 40 | (uint64_t)data->source[1] << 32 | 
+			(uint64_t)data->source[2] << 24 | (uint64_t)data->source[3] << 16 | 
+			(uint64_t)data->source[4] << 8 | (uint64_t)data->source[5];
 		//rxbuf temp processing
 		bt_packed_data_t temp_packed;
 		uint16_t num_vals = 0;
-		memcpy(&num_vals, rx_buf, sizeof(uint16_t));
+		memcpy(&num_vals, pos, sizeof(uint16_t));
 		uint32_t curr_len = 2;
 		printf("Number of MACs detected: %d\n",num_vals);
 		printf("%d | %d\n", sizeof(bt_packed_data_t), data_len);
@@ -206,38 +174,48 @@ int alfred_req_data(int data_id, char* rx_buf, int *rx_len)
 				printf("why is there not enough data here >:()\n");
 				break;
 			}
-			memcpy(&temp_packed, rx_buf+curr_len, sizeof(bt_packed_data_t));
+			memcpy(&temp_packed, pos+curr_len, sizeof(bt_packed_data_t));
 			curr_len += sizeof(bt_packed_data_t);
-			printf("Discovered %6x | RSSI: %d | at time %ld\n",
+			printf("Discovered %10x | RSSI: %d | at time %ld\n",
 			temp_packed.mac_addr, temp_packed.rssi,temp_packed.time);
-
+			std::pair<std::string,std::string> temp_pair(int_to_hex<uint64_t>(src_macaddr), int_to_hex<uint64_t>(temp_packed.mac_addr));
+			if (data_map.count(temp_packed.mac_addr) > 0){
+				data_map.at(temp_packed.mac_addr).emplace_back(temp_pair);
+			} else {
+				std::vector<std::pair<std::string,std::string>> temp_vector;
+				temp_vector.emplace_back(temp_pair);
+				data_map.insert({temp_packed.mac_addr,temp_vector});
+			}
 		}
 	}
 	unix_sock_close(&alfred_socket);
 
+	using Attrs = std::vector<std::pair<std::string, std::string>>;
+	// Attrs attrs = { {"f1", "v1"}, {"f2", "v2"} };
+
+	// // Add an item into the stream. This method returns the auto generated id.
+	// auto id = redis.xadd("key", "*", attrs.begin(), attrs.end());
+	for (std::pair<uint64_t,std::vector<std::pair<std::string, std::string>>> curr_mac : data_map){
+		auto mac_hex = int_to_hex<uint64_t>(std::get<0>(curr_mac));
+		std::cout << mac_hex << "\n";
+		auto id =redis.xadd(mac_hex, "*",std::get<1>(curr_mac).begin(), std::get<1>(curr_mac).end());
+		std::get<1>(curr_mac).clear();
+	}
+
 	return 0;
 
-recv_err:
-	/* read the rest of the status message */
-	ret = read(alfred_socket, buf + sizeof(*tlv),
-		   sizeof(*status) - sizeof(*tlv));
+// recv_err:
+// 	/* read the rest of the status message */
+// 	ret = read(alfred_socket, buf + sizeof(*tlv),
+// 		   sizeof(*status) - sizeof(*tlv));
 
-	/* too short */
-	if (ret < (int)(sizeof(*status) - sizeof(*tlv)))
-		return -1;
+// 	/* too short */
+// 	if (ret < (int)(sizeof(*status) - sizeof(*tlv)))
+// 		return -1;
 
-	status = (struct alfred_status_v0 *)buf;
-	fprintf(stderr, "Request failed with %d\n", status->tx.seqno);
+// 	status = (struct alfred_status_v0 *)buf;
+// 	fprintf(stderr, "Request failed with %d\n", status->tx.seqno);
 
-	return status->tx.seqno;
-}
-
-
-int alfred_send_ble_data(char* send_buf, int send_len){
-	return alfred_send_data(65,send_buf,send_len);
-}
-
-int alfred_req_ble_data(char* rx_buf, int* rx_len){
-	return alfred_req_data(65,rx_buf, rx_len);
+// 	return status->tx.seqno;
 }
 

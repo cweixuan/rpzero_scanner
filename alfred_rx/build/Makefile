@@ -130,17 +130,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named alfredRX
+# Target rules for targets named AlfredRX
 
 # Build rule for target.
-alfredRX: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 alfredRX
-.PHONY : alfredRX
+AlfredRX: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 AlfredRX
+.PHONY : AlfredRX
 
 # fast build rule for target.
-alfredRX/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/build
-.PHONY : alfredRX/fast
+AlfredRX/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AlfredRX.dir/build.make CMakeFiles/AlfredRX.dir/build
+.PHONY : AlfredRX/fast
 
 src/alfredRX.o: src/alfredRX.cpp.o
 
@@ -148,7 +148,7 @@ src/alfredRX.o: src/alfredRX.cpp.o
 
 # target to build an object file
 src/alfredRX.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/src/alfredRX.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AlfredRX.dir/build.make CMakeFiles/AlfredRX.dir/src/alfredRX.cpp.o
 .PHONY : src/alfredRX.cpp.o
 
 src/alfredRX.i: src/alfredRX.cpp.i
@@ -157,7 +157,7 @@ src/alfredRX.i: src/alfredRX.cpp.i
 
 # target to preprocess a source file
 src/alfredRX.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/src/alfredRX.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AlfredRX.dir/build.make CMakeFiles/AlfredRX.dir/src/alfredRX.cpp.i
 .PHONY : src/alfredRX.cpp.i
 
 src/alfredRX.s: src/alfredRX.cpp.s
@@ -166,7 +166,7 @@ src/alfredRX.s: src/alfredRX.cpp.s
 
 # target to generate assembly for a file
 src/alfredRX.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/src/alfredRX.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AlfredRX.dir/build.make CMakeFiles/AlfredRX.dir/src/alfredRX.cpp.s
 .PHONY : src/alfredRX.cpp.s
 
 src/client.o: src/client.cpp.o
@@ -175,7 +175,7 @@ src/client.o: src/client.cpp.o
 
 # target to build an object file
 src/client.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/src/client.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AlfredRX.dir/build.make CMakeFiles/AlfredRX.dir/src/client.cpp.o
 .PHONY : src/client.cpp.o
 
 src/client.i: src/client.cpp.i
@@ -184,7 +184,7 @@ src/client.i: src/client.cpp.i
 
 # target to preprocess a source file
 src/client.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/src/client.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AlfredRX.dir/build.make CMakeFiles/AlfredRX.dir/src/client.cpp.i
 .PHONY : src/client.cpp.i
 
 src/client.s: src/client.cpp.s
@@ -193,7 +193,7 @@ src/client.s: src/client.cpp.s
 
 # target to generate assembly for a file
 src/client.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/alfredRX.dir/build.make CMakeFiles/alfredRX.dir/src/client.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/AlfredRX.dir/build.make CMakeFiles/AlfredRX.dir/src/client.cpp.s
 .PHONY : src/client.cpp.s
 
 # Help Target
@@ -204,7 +204,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... alfredRX"
+	@echo "... AlfredRX"
 	@echo "... src/alfredRX.o"
 	@echo "... src/alfredRX.i"
 	@echo "... src/alfredRX.s"

@@ -101,17 +101,21 @@ int ht_destroy(HashTable* table) {
 
 	assert(ht_is_initialized(table));
 	if (!ht_is_initialized(table)) return HT_ERROR;
-
-	for (chain = 0; chain < table->capacity; ++chain) {
-		node = table->nodes[chain];
-		while (node) {
-			next = node->next;
-			_ht_destroy_node(node);
-			node = next;
+	if (table->nodes != NULL){
+		for (chain = 0; chain < table->capacity; ++chain) {
+			node = table->nodes[chain];
+			if (node != NULL){
+				while (node) {
+					next = node->next;
+					if (next != NULL){
+						_ht_destroy_node(node);
+					}
+					node = next;
+				}
+			}
 		}
+		free(table->nodes);
 	}
-
-	free(table->nodes);
 
 	return HT_SUCCESS;
 }
@@ -371,10 +375,15 @@ int _ht_push_front(HashTable* table, size_t index, void* key, void* value) {
 
 void _ht_destroy_node(HTNode* node) {
 	assert(node != NULL);
-
-	free(node->key);
-	free(node->value);
-	free(node);
+	if (node->key != NULL){
+		free(node->key);
+	}
+	if (node->value != NULL){
+		free(node->value);
+	}
+	if (node != NULL){
+		free(node);
+	}
 }
 
 int _ht_adjust_capacity(HashTable* table) {

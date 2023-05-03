@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/notpi/Documents/rpzero_scanner/alfred_rx/inc
 
-CXX_FLAGS = 
+CXX_FLAGS = -std=gnu++17
 

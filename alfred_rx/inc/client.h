@@ -13,9 +13,6 @@
 uint16_t get_random_id(void);
 int unix_sock_open_client(int* alfred_socket);
 int unix_sock_close(int* alfred_socket);
-int alfred_send_data(int data_id,char* send_buf, int send_len);
-int alfred_req_data(int data_id, char* rx_buf, int *rx_len);
-int alfred_send_ble_data(char* send_buf, int send_len);
-int alfred_req_ble_data(char* rx_buf, int* rx_len);
+int alfred_req_data_redis(int data_id,sw::redis::Redis &redis);
 
 #endif
