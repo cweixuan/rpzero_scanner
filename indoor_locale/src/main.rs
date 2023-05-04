@@ -44,11 +44,11 @@ fn handle_connection(mut con: Connection, name_stream: &str) -> LocaleResult {
         pos: [0., 0., 0.],
     };
 
-    let test_data: RSSIData = vec![("time_node2".to_string(), "-40".to_string()),
-    ("time_node3".to_string(), "-10".to_string()),
-    ("time_node4".to_string(), "-60".to_string()),
-    ("time_node1".to_string(), "-10".to_string()),
-    ("time_node5".to_string(), "-80".to_string())]; 
+    let test_data: RSSIData = vec![("node2".to_string(), "-40".to_string()),
+    ("node3".to_string(), "-10".to_string()),
+    ("node4".to_string(), "-60".to_string()),
+    ("node1".to_string(), "-10".to_string()),
+    ("node5".to_string(), "-80".to_string())]; 
 
     (raw_data, result) = get_data(&mut con, name_stream);
     if result.status == 0 {
@@ -131,7 +131,7 @@ fn filter_floor(con: &mut Connection, data: RSSIData) -> RSSIData {
     for node in data.iter() {
         let rssi: i32 = node.1.parse::<i32>().unwrap();
         
-        let node_name = node.0.split("_").collect::<Vec<&str>>()[1];
+        let node_name = &node.0;
 
         let value: String = cmd("HGET")
             .arg("node_coords").arg(node_name)
@@ -140,7 +140,7 @@ fn filter_floor(con: &mut Connection, data: RSSIData) -> RSSIData {
         let z_coord = value.split(";").map(|c| c.parse::<i32>().unwrap()).collect::<Vec<i32>>()[2];
 
 
-        floors.push((rssi, z_coord, node_name));
+        floors.push((rssi, z_coord, &node_name));
     }
     
     let mut tally = [(0, 2), (0, 3), (0, 4)];
@@ -160,7 +160,7 @@ fn filter_floor(con: &mut Connection, data: RSSIData) -> RSSIData {
     let mut filter_data: RSSIData = vec![];
 
     for node in data.iter(){
-        let node_name = node.0.split("_").collect::<Vec<&str>>()[1];
+        let node_name = &node.0;
         let mut flag: bool = false;
 
         for tuple in floors.iter() {
@@ -203,10 +203,7 @@ fn multilateration(con: &mut Connection, data: RSSIData) -> LocaleResult {
     // fill coords in same order as data
 
     for node in data.iter(){
-        let test = node.0.split("_").collect::<Vec<&str>>();
-        //println!("{:?}", test);
-
-        let node_name = node.0.split("_").collect::<Vec<&str>>()[1];
+        let node_name = &node.0;
 
         let value: String = cmd("HGET")
             .arg("node_coords").arg(node_name)
