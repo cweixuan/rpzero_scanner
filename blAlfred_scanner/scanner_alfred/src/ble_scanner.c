@@ -121,7 +121,7 @@ int bt_thread_func() {
 	printf("hello\n");
 	uint64_t i = 0;
 	while (1){
-		printf("scan %ld\r\n",i++);
+		printf("scan %lld\r\n",i++);
 		ret = gattlib_adapter_open(adapter_name, &adapter);
 		if (ret) {
 			//insert logic for failing to open adapter, reset the program? crash?
@@ -208,7 +208,7 @@ int data_update_thread_func(){
 						temp_send_data.rssi = data_temp->rssi;
 						temp_send_data.time = data_temp->time;
 						//check if last datapoint was > 1h ago
-						printf("Discovered %6lx | RSSI: %d at Time: %s", 
+						printf("Discovered %6llx | RSSI: %d at Time: %s", 
 						data_temp->mac_addr,data_temp->rssi, ctime(&data_temp->time));
 						memcpy(tx_buf+tx_len, &temp_send_data, sizeof(bt_packed_data_t));
 						tx_len += sizeof(bt_packed_data_t);
@@ -264,5 +264,5 @@ int main(int argc, char argv[]){
 		perror("pthread_create() error");
 		exit(3);
 	}
-  printf("thread exited with '%s'\n", ret);
+  printf("thread exited with '%p'\n", ret);
 }

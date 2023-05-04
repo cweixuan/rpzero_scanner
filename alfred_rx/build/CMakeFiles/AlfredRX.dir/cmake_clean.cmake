@@ -2,7 +2,9 @@ file(REMOVE_RECURSE
   "AlfredRX"
   "AlfredRX.pdb"
   "CMakeFiles/AlfredRX.dir/src/alfredRX.cpp.o"
+  "CMakeFiles/AlfredRX.dir/src/alfredRX.cpp.o.d"
   "CMakeFiles/AlfredRX.dir/src/client.cpp.o"
+  "CMakeFiles/AlfredRX.dir/src/client.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.
