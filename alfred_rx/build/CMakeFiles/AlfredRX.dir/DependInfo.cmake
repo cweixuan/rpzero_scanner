@@ -1,17 +1,15 @@
+
+# Consider dependencies only in project.
+set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
+
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
-  "CXX"
   )
-# The set of files for implicit dependencies of each language:
-set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/notpi/Documents/rpzero_scanner/alfred_rx/src/alfredRX.cpp" "/home/notpi/Documents/rpzero_scanner/alfred_rx/build/CMakeFiles/AlfredRX.dir/src/alfredRX.cpp.o"
-  "/home/notpi/Documents/rpzero_scanner/alfred_rx/src/client.cpp" "/home/notpi/Documents/rpzero_scanner/alfred_rx/build/CMakeFiles/AlfredRX.dir/src/client.cpp.o"
-  )
-set(CMAKE_CXX_COMPILER_ID "GNU")
 
-# The include file search paths:
-set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "../inc"
+# The set of dependency files which are needed:
+set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/ble-iot/Documents/rpzero_scanner/alfred_rx/src/alfredRX.cpp" "CMakeFiles/AlfredRX.dir/src/alfredRX.cpp.o" "gcc" "CMakeFiles/AlfredRX.dir/src/alfredRX.cpp.o.d"
+  "/home/ble-iot/Documents/rpzero_scanner/alfred_rx/src/client.cpp" "CMakeFiles/AlfredRX.dir/src/client.cpp.o" "gcc" "CMakeFiles/AlfredRX.dir/src/client.cpp.o.d"
   )
 
 # Targets to which this target links.

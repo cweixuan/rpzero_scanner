@@ -169,7 +169,7 @@ int alfred_req_data_redis(int data_id, sw::redis::Redis &redis)
 		memcpy(&num_vals, pos, sizeof(uint16_t));
 		uint32_t curr_len = 2;
 		printf("Number of MACs detected: %d\n",num_vals);
-		printf("%d | %d\n", sizeof(bt_packed_data_t), data_len);
+		printf("%ld | %d\n", sizeof(bt_packed_data_t), data_len);
 		for (uint32_t i =0; i < num_vals; i ++){
 			if(data_len  - curr_len < sizeof(bt_packed_data_t)) {
 				printf("why is there not enough data here >:()\n");
@@ -177,7 +177,7 @@ int alfred_req_data_redis(int data_id, sw::redis::Redis &redis)
 			}
 			memcpy(&temp_packed, pos+curr_len, sizeof(bt_packed_data_t));
 			curr_len += sizeof(bt_packed_data_t);
-			printf("Discovered %10x | RSSI: %d | at time %ld\n",
+			printf("Discovered %10lx | RSSI: %ld | at time %ld\n",
 			temp_packed.mac_addr, temp_packed.rssi,temp_packed.time);
 			std::pair<std::string,int64_t> temp_pair(src_macaddr, temp_packed.rssi);
 			if (data_map.count(temp_packed.mac_addr) > 0){
