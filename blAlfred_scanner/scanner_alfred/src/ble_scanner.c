@@ -15,14 +15,16 @@
 #include "client.h"
 
 #define BLE_SCAN_TIMEOUT   2
-#define WHITELIST_ENABLED 1 
 #define FILTER_LIST_LOCATION "/home/notpi/Documents/whitelist_macs.txt"
+#define DATA_UPDATE_DELAY 5
+#define WHITELIST_UPDATE_DELAY 60
 
 Deque g_bt_data_deque;
 // We use a mutex to make the BLE connections synchronous
 static pthread_mutex_t bt_mutex = PTHREAD_MUTEX_INITIALIZER;
 HashTable* g_mac_filter_table;
 uint8_t mac_filter_rdy = 1;
+uint8_t white_list_enabled = 0;
 
 typedef void (*ble_discovered_device_t)(const char* addr, const char* name);
 
@@ -39,16 +41,17 @@ int read_mac_list_thread(){
 		//empty the table 
 		mac_filter_rdy = 0;
 		if (!ht_is_empty(g_mac_filter_table)){
-			// ht_destroy(g_mac_filter_table);
+			ht_destroy(g_mac_filter_table);
+			ht_setup(g_mac_filter_table, sizeof(uint64_t), sizeof(bt_data_t), 20);
 		}
 		FILE *fp;
 		fp = fopen(FILTER_LIST_LOCATION, "r");
 		if (fp == NULL){
+			white_list_enabled = 0;
 			printf("cannot find whitelist file, no mac filter\n");
 			return -1;
 		}
 		unsigned int addr[6];
-		
 		while (EOF != fscanf(fp,  "%2x:%2x:%2x:%2x:%2x:%2x\n", addr+5, addr+4,addr+3,addr+2,addr+1,addr))
 		{
 			uint64_t mac_addr = (uint64_t)addr[5] << 40 | (uint64_t)addr[4] << 32 | 
@@ -58,7 +61,7 @@ int read_mac_list_thread(){
 		}
 		mac_filter_rdy= 1;
 		fclose(fp);
-		sleep(30);
+		sleep(WHITELIST_UPDATE_DELAY);
 	}
 	
 	ht_destroy(g_mac_filter_table);
@@ -86,7 +89,7 @@ static void ble_discovered_device(void *adapter, const char* addr, const char* n
     sscanf(addr,  "%2x:%2x:%2x:%2x:%2x:%2x", haddr+5, haddr+4,haddr+3,haddr+2,haddr+1,haddr);
 	uint64_t mac_addr = (uint64_t)haddr[5] << 40 | (uint64_t)haddr[4] << 32 | 
 	(uint64_t)haddr[3] << 24 | (uint64_t)haddr[2] << 16 | (uint64_t)haddr[1] << 8 | (uint64_t)haddr[0];
-	if (mac_filter_rdy == 1 || (WHITELIST_ENABLED == 0)){
+	if (mac_filter_rdy == 1 || (white_list_enabled == 0)){
 		if (g_mac_filter_table == NULL){			
 			bt_data_t *temp = malloc(sizeof(bt_data_t));
 			if (temp == NULL){
@@ -96,7 +99,7 @@ static void ble_discovered_device(void *adapter, const char* addr, const char* n
 			// printf("Discovered %6lx | RSSI: %d\n", mac_addr,rssi);
 			bt_data_pack(temp, mac_addr, rssi, time(NULL));
 			deque_append(g_bt_data_deque, temp);
-		} else if (ht_contains(g_mac_filter_table, &mac_addr)|| (WHITELIST_ENABLED == 0)){
+		} else if (ht_contains(g_mac_filter_table, &mac_addr)|| (white_list_enabled == 0)){
 			bt_data_t *temp = malloc(sizeof(bt_data_t));
 			if (temp == NULL){
 				printf("failed to allocate new bt_data node\n");
@@ -222,7 +225,7 @@ int data_update_thread_func(){
 			}
 		alfred_send_data(tx_buf, tx_len);
 		}
-		sleep(10);
+		sleep(DATA_UPDATE_DELAY);
 	}
 }
 

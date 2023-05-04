@@ -74,7 +74,7 @@ template< typename T >
 std::string int_to_hex( T i )
 {
   std::stringstream stream;
-  stream << std::hex << i;
+  stream << std::setw(12) << std::setfill('0')  << std::hex << i;
   return stream.str();
 }
 
@@ -109,7 +109,7 @@ int alfred_req_data_redis(int data_id, sw::redis::Redis &redis)
 	push = (struct alfred_push_data_v0 *)buf;
 	tlv = (struct alfred_tlv *)buf;
 
-	std::unordered_map<uint64_t,std::vector<std::pair<std::string,std::string>>> data_map;
+	std::unordered_map<uint64_t,std::vector<std::pair<std::string,int64_t>>> data_map;
 	
 	while ((ret = read(alfred_socket, buf, sizeof(*tlv))) > 0) {
 		if (ret < (int)sizeof(*tlv))
@@ -159,9 +159,10 @@ int alfred_req_data_redis(int data_id, sw::redis::Redis &redis)
 		//        data->source[0], data->source[1],
 		//        data->source[2], data->source[3],
 		//        data->source[4], data->source[5]);
-		uint64_t src_macaddr = (uint64_t)data->source[0] << 40 | (uint64_t)data->source[1] << 32 | 
+		uint64_t src_macaddr_uint = (uint64_t)data->source[0] << 40 | (uint64_t)data->source[1] << 32 | 
 			(uint64_t)data->source[2] << 24 | (uint64_t)data->source[3] << 16 | 
 			(uint64_t)data->source[4] << 8 | (uint64_t)data->source[5];
+			std::string src_macaddr = int_to_hex<uint64_t>(src_macaddr_uint);
 		//rxbuf temp processing
 		bt_packed_data_t temp_packed;
 		uint16_t num_vals = 0;
@@ -178,24 +179,18 @@ int alfred_req_data_redis(int data_id, sw::redis::Redis &redis)
 			curr_len += sizeof(bt_packed_data_t);
 			printf("Discovered %10x | RSSI: %d | at time %ld\n",
 			temp_packed.mac_addr, temp_packed.rssi,temp_packed.time);
-			std::pair<std::string,std::string> temp_pair(int_to_hex<uint64_t>(src_macaddr), int_to_hex<uint64_t>(temp_packed.mac_addr));
+			std::pair<std::string,int64_t> temp_pair(src_macaddr, temp_packed.rssi);
 			if (data_map.count(temp_packed.mac_addr) > 0){
 				data_map.at(temp_packed.mac_addr).emplace_back(temp_pair);
 			} else {
-				std::vector<std::pair<std::string,std::string>> temp_vector;
+				std::vector<std::pair<std::string,int64_t>> temp_vector;
 				temp_vector.emplace_back(temp_pair);
 				data_map.insert({temp_packed.mac_addr,temp_vector});
 			}
 		}
 	}
 	unix_sock_close(&alfred_socket);
-
-	using Attrs = std::vector<std::pair<std::string, std::string>>;
-	// Attrs attrs = { {"f1", "v1"}, {"f2", "v2"} };
-
-	// // Add an item into the stream. This method returns the auto generated id.
-	// auto id = redis.xadd("key", "*", attrs.begin(), attrs.end());
-	for (std::pair<uint64_t,std::vector<std::pair<std::string, std::string>>> curr_mac : data_map){
+	for (std::pair<uint64_t,std::vector<std::pair<std::string, int64_t>>> curr_mac : data_map){
 		auto mac_hex = int_to_hex<uint64_t>(std::get<0>(curr_mac));
 		std::cout << mac_hex << "\n";
 		auto id =redis.xadd(mac_hex, "*",std::get<1>(curr_mac).begin(), std::get<1>(curr_mac).end());
