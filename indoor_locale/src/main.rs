@@ -2,7 +2,8 @@ use redis::{Client, cmd, Connection};
 extern crate nalgebra as na;
 use na::{DMatrix, DVector};
 
-type RedisStream = Vec<Vec<(String, Vec<Vec<(String, Vec<(String, String)>)>>)>>;
+//type RedisStream = Vec<Vec<(String, Vec<Vec<(String, Vec<(String, String)>)>>)>>;
+type RedisStream = Vec<Vec<(String, Vec<(String, String)>)>>;
 type RSSIData = Vec<(String, String)>;
 
 #[derive(Debug)]
@@ -29,7 +30,7 @@ fn main() {
     let client = Client::open("redis://127.0.0.1/").unwrap();
     let con: Connection = client.get_connection().unwrap();
     
-    let name_stream: &str = "main_stream";
+    let name_stream: &str = "60bbcd6af421";
 
     let result = handle_connection(con, name_stream);
 
@@ -44,16 +45,15 @@ fn handle_connection(mut con: Connection, name_stream: &str) -> LocaleResult {
         pos: [0., 0., 0.],
     };
 
-    let test_data: RSSIData = vec![("node2".to_string(), "-40".to_string()),
-    ("node3".to_string(), "-10".to_string()),
-    ("node4".to_string(), "-60".to_string()),
-    ("node1".to_string(), "-10".to_string()),
-    ("node5".to_string(), "-80".to_string())]; 
+    // let test_data: RSSIData = vec![("node2".to_string(), "-40".to_string()),
+    // ("node3".to_string(), "-10".to_string()),
+    // ("node4".to_string(), "-60".to_string()),
+    // ("node1".to_string(), "-10".to_string()),
+    // ("node5".to_string(), "-80".to_string())]; 
 
     (raw_data, result) = get_data(&mut con, name_stream);
     if result.status == 0 {
-        //let (clean_data, result) = qualify_data(raw_data);
-        (clean_data, result) = qualify_data(&mut con, test_data);
+        (clean_data, result) = qualify_data(&mut con, raw_data);
         
         if result.status == 0 {
             result = multilateration(&mut con, clean_data);
@@ -70,17 +70,22 @@ fn get_data(con: &mut Connection, mac: &str) -> (RSSIData, LocaleResult) {
     };
     let mut raw_data: RSSIData = vec![];
 
-    let value: RedisStream = cmd("XREAD")
-        .arg("COUNT").arg("1")
+/*    let value: RedisStream = cmd("XRANGE")
+        .arg("COUNT").arg("17")
         .arg("STREAMS").arg(mac).arg("0")
         .query(con).unwrap();
-
-
+*/  
+//    println!("{}", mac);
+    let value: RedisStream  = cmd("XREVRANGE")
+        .arg(mac).arg("+").arg("-").arg("COUNT").arg("1")
+        .query(con).unwrap();
+    
+ //   println!("{:?}", value[0][0].1);
     if value.len() == 0 {
         result.status = 1;
     }
     else {
-        for node in value[0][0].1[0][0].1.iter(){
+        for node in value[0][0].1.iter(){
             raw_data.push(node.clone());
         }
     }
@@ -91,13 +96,14 @@ fn get_data(con: &mut Connection, mac: &str) -> (RSSIData, LocaleResult) {
 
 // todo: set cutoff as global const
 fn qualify_data(con: &mut Connection, data: RSSIData) -> (RSSIData, LocaleResult) {
-    let cutoff: i32 = -65;
+    let cutoff: i32 = -99;
     let mut result = LocaleResult{
         status: 0,
         pos: [0., 0., 0.],
     }; 
     let mut clean_data: RSSIData = vec![];
-
+    
+    println!("{:?}", data);
     if data.len() < 3 {
         result.status = 2;
     }
@@ -128,11 +134,13 @@ fn qualify_data(con: &mut Connection, data: RSSIData) -> (RSSIData, LocaleResult
 fn filter_floor(con: &mut Connection, data: RSSIData) -> RSSIData {
     let mut floors: Vec<(i32, i32, &str)> = vec![];
 
+    
     for node in data.iter() {
         let rssi: i32 = node.1.parse::<i32>().unwrap();
         
         let node_name = &node.0;
-
+        
+        println!("{}", node_name);
         let value: String = cmd("HGET")
             .arg("node_coords").arg(node_name)
             .query(con).unwrap();
@@ -238,7 +246,7 @@ fn multilateration(con: &mut Connection, data: RSSIData) -> LocaleResult {
         let di_2 = rssi_to_distance(data[row].1.parse::<i32>().unwrap()).powi(2);
         let dm_2 = rssi_to_distance(data[len-1].1.parse::<i32>().unwrap()).powi(2);
 
-        b[(row)] = xi_2 - xm_2 + yi_2 - ym_2 + di_2 - dm_2;
+        b[row] = xi_2 - xm_2 + yi_2 - ym_2 + di_2 - dm_2;
 
         //println!("xi_2: {}, xm_2: {}, yi_2: {}, ym_2: {}, di_2: {}, dm_2: {}", xi_2, xm_2, yi_2, ym_2, di_2, dm_2);
         //println!("b[row]: {}", b[(row)]);
@@ -248,8 +256,8 @@ fn multilateration(con: &mut Connection, data: RSSIData) -> LocaleResult {
 
     //println!("x[0]: {}, x[1]: {}", x[(0)], x[(1)]);
 
-    result.pos[0] = x[(0)];
-    result.pos[1] = x[(1)]; 
+    result.pos[0] = x[0];
+    result.pos[1] = x[1]; 
 
     result
 }

@@ -1,8 +1,6 @@
 use redis::{Client, cmd, Connection};
 use std::fs; 
 
-type RedisStream = Vec<Vec<(String, Vec<Vec<(String, Vec<(String, String)>)>>)>>;
-
 fn main() {
     let redis_key: &str = "node_coords";
     let file_path: &str = "/home/jasshank/work/coord_map/coords.txt";
