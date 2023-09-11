@@ -2,7 +2,6 @@ use redis::{Client, cmd, Connection};
 extern crate nalgebra as na;
 use na::{DMatrix, DVector};
 
-//type RedisStream = Vec<Vec<(String, Vec<Vec<(String, Vec<(String, String)>)>>)>>;
 type RedisStream = Vec<Vec<(String, Vec<(String, String)>)>>;
 type RSSIData = Vec<(String, String)>;
 
@@ -40,12 +39,6 @@ fn main() {
 }
 
 fn handle_connection(mut con: Connection, name_stream: &str) -> Result<Locale, Status> {
-    // let test_data: RSSIData = vec![("node2".to_string(), "-40".to_string()),
-    // ("node3".to_string(), "-10".to_string()),
-    // ("node4".to_string(), "-60".to_string()),
-    // ("node1".to_string(), "-10".to_string()),
-    // ("node5".to_string(), "-80".to_string())]; 
-    
     let raw_data = get_data(&mut con, name_stream)?;
     let clean_data = qualify_data(&mut con, raw_data, -99)?;
     let result = multilateration(&mut con, clean_data)?;
@@ -56,83 +49,75 @@ fn handle_connection(mut con: Connection, name_stream: &str) -> Result<Locale, S
 fn get_data(con: &mut Connection, mac: &str) -> Result<RSSIData, Status> {
     let mut raw_data: RSSIData = vec![];
 
-/*    let value: RedisStream = cmd("XRANGE")
-        .arg("COUNT").arg("17")
-        .arg("STREAMS").arg(mac).arg("0")
-        .query(con).unwrap();
-*/  
-//    println!("{}", mac);
     let value: RedisStream  = cmd("XREVRANGE")
         .arg(mac).arg("+").arg("-").arg("COUNT").arg("1")
         .query(con).unwrap();
     
- //   println!("{:?}", value[0][0].1);
-
     if value.len() == 0 {
         return Err(Status::MACNotFound);
     }
-    else {
-        for node in value[0][0].1.iter(){
-            raw_data.push(node.clone());
-        }
+    
+    for node in value[0][0].1.iter(){
+        raw_data.push(node.clone());
     }
-
 
     Ok(raw_data)
 }
 
 fn qualify_data(con: &mut Connection, data: RSSIData, cutoff: i32) -> Result<RSSIData, Status> {
     let mut clean_data: RSSIData = vec![];
-    
-    //println!("{:?}", data);
 
     if data.len() < 3 {
         return Err(Status::LackOfRSSIData);
     }
-    else {
-        // remove nodes not from the same floor 
-        let filter_data = filter_floor(con, data.clone());
-        println!("{:?}", filter_data);
 
-        for node in filter_data.iter() {
-            let rssi: i32 = node.1.parse::<i32>().unwrap();
+    // remove nodes not from the same floor 
+    let filter_data = filter_floor(con, data.clone());
+    //println!("{:?}", filter_data);
 
-            if rssi > cutoff {
-                clean_data.push((node.0.to_string(), node.1.to_string()));
-            }
+    for node in filter_data.iter() {
+        let rssi: i32 = node.1.parse::<i32>().unwrap();
+
+        if rssi > cutoff {
+            clean_data.push((node.0.to_string(), node.1.to_string()));
         }
+    }
 
-        if clean_data.len() < 3 {
-            return Err(Status::RSSINotInRange)
-        }
+    if clean_data.len() < 3 {
+        return Err(Status::RSSINotInRange)
     }
 
     Ok(clean_data)
 }
 
 fn filter_floor(con: &mut Connection, data: RSSIData) -> RSSIData {
-    let mut floors: Vec<(i32, i32, &str)> = vec![];
+    type ZCoord = i32;
+    type NodeName<'a> = &'a str;
 
-    
+    let mut node_floors: Vec<(ZCoord, NodeName)> = vec![];
+
+    // populate floors nodes are found in
     for node in data.iter() {
-        let rssi: i32 = node.1.parse::<i32>().unwrap();
+        //let rssi: i32 = node.1.parse::<i32>().unwrap();
         
         let node_name = &node.0;
         
-        println!("{}", node_name);
+        //println!("{}", node_name);
         let value: String = cmd("HGET")
             .arg("node_coords").arg(node_name)
             .query(con).unwrap();
 
         let z_coord = value.split(";").map(|c| c.parse::<i32>().unwrap()).collect::<Vec<i32>>()[2];
 
-
-        floors.push((rssi, z_coord, &node_name));
+        node_floors.push((z_coord, &node_name));
     }
     
+    // find common floor
     let mut tally = [(0, 2), (0, 3), (0, 4)];
-    for tuple in floors.iter() {
-        match tuple.1 {
+    for node_floor in node_floors.iter() {
+        let z_coord = node_floor.0;
+
+        match z_coord {
             2 => tally[0].0 += 1,
             3 => tally[1].0 += 1, 
             4 => tally[2].0 += 1,
@@ -141,28 +126,25 @@ fn filter_floor(con: &mut Connection, data: RSSIData) -> RSSIData {
     }
 
     tally.sort(); 
+    let common_floor: i32 = tally[2].1;
 
-    let floor: i32 = tally[2].1;
+    // pick nodes on same floor
+    let mut filtered_data: RSSIData = vec![];
 
-    let mut filter_data: RSSIData = vec![];
-
-    for node in data.iter(){
+    'a: for node in data.iter(){
         let node_name = &node.0;
-        let mut flag: bool = false;
 
-        for tuple in floors.iter() {
-            if tuple.1 != floor {
-                if tuple.2 == node_name {
-                flag = true;
-                }
+        // if node is not in common floor, dont add to filtered_data
+        for (floor, name) in node_floors.iter() {
+            if  name == node_name && *floor != common_floor{
+                continue 'a;
             }
         }
-        if flag == false {
-            filter_data.push(node.clone());
-        }
+
+        filtered_data.push(node.clone());
     }
 
-    filter_data
+    filtered_data
 }
 
 fn rssi_to_distance(rssi: i32, measured_power: i32, n: i32) -> f64 {
@@ -230,4 +212,18 @@ fn multilateration(con: &mut Connection, data: RSSIData) -> Result<Locale, Statu
 
 
 
-
+// dead zone
+//
+    // let test_data: RSSIData = vec![("node2".to_string(), "-40".to_string()),
+    // ("node3".to_string(), "-10".to_string()),
+    // ("node4".to_string(), "-60".to_string()),
+    // ("node1".to_string(), "-10".to_string()),
+    // ("node5".to_string(), "-80".to_string())]; 
+/*    let value: RedisStream = cmd("XRANGE")
+        .arg("COUNT").arg("17")
+        .arg("STREAMS").arg(mac).arg("0")
+        .query(con).unwrap();
+*/  
+//    println!("{}", mac);
+//
+//type RedisStream = Vec<Vec<(String, Vec<Vec<(String, Vec<(String, String)>)>>)>>;
