@@ -6,23 +6,17 @@
 typedef struct bt_data_t {
     // char mac_addr[17];
     uint64_t mac_addr;
-    int rssi;
+    int32_t rssi;
     time_t time;
-    void* next;
-    void* prev;
 }bt_data_t;
 
-typedef struct{
-    bt_data_t* list_head;
-    bt_data_t* list_tail;
-    int size;
-}bt_data_list_t;
+typedef struct bt_packed_data_t{
+    uint64_t mac_addr;
+    uint64_t time;
+    int64_t rssi;
 
+} bt_packed_data_t __attribute__ ((packed));
 
-
-struct bt_globals {
-    bt_data_list_t* bluetooth_data_list;
-};
 // int alfred_client_poll(struct globals *globals);
 
 

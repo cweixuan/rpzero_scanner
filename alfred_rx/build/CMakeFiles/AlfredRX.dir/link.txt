@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/AlfredRX.dir/src/alfredRX.cpp.o CMakeFiles/AlfredRX.dir/src/client.cpp.o -o AlfredRX  -Wl,-rpath,/usr/local/lib /usr/local/lib/libhiredis.so /usr/local/lib/libredis++.so -lpthread 

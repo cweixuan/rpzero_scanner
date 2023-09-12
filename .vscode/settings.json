@@ -2,5 +2,6 @@
     "files.associations": {
         "gattlib.h": "c",
         "deque.h": "c"
-    }
+    },
+    "cmake.sourceDirectory": "${workspaceFolder}/alfred_rx"
 }

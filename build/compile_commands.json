@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/jasshank/Documents/rpzero_scanner/build",
+  "command": "/usr/bin/g++   -I/home/jasshank/Documents/rpzero_scanner/alfred_rx/inc  -g   -o CMakeFiles/alfredRX.dir/src/alfredRX.cpp.o -c /home/jasshank/Documents/rpzero_scanner/alfred_rx/src/alfredRX.cpp",
+  "file": "/home/jasshank/Documents/rpzero_scanner/alfred_rx/src/alfredRX.cpp"
+},
+{
+  "directory": "/home/jasshank/Documents/rpzero_scanner/build",
+  "command": "/usr/bin/g++   -I/home/jasshank/Documents/rpzero_scanner/alfred_rx/inc  -g   -o CMakeFiles/alfredRX.dir/src/client.cpp.o -c /home/jasshank/Documents/rpzero_scanner/alfred_rx/src/client.cpp",
+  "file": "/home/jasshank/Documents/rpzero_scanner/alfred_rx/src/client.cpp"
+}
+]
