@@ -58,7 +58,12 @@ fn get_data(con: &mut Connection, mac: &str) -> Result<RSSIData, Status> {
     }
     
     for node in value[0][0].1.iter(){
-        raw_data.push(node.clone());
+        let mut node_name: String = "node".to_owned();
+        let suffix: &str = &node.0[8..12];
+        node_name.push_str(suffix);
+
+        let data = (node_name, node.1.clone());
+        raw_data.push(data.clone());
     }
 
     Ok(raw_data)
@@ -182,7 +187,6 @@ fn multilateration(con: &mut Connection, data: RSSIData) -> Result<Locale, Statu
     for row in 0..len{
         a[(row, 0)] = 2.0 * (coords[row].0 - coords[len-1].0);
         a[(row, 1)] = 2.0 * (coords[row].1 - coords[len-1].1);
-        a[(row, 2)] = 2.0 * (coords[row].2 - coords[len-1].2);
 
         let xi_2 = coords[row].0.powi(2);
         let xm_2 = coords[len-1].0.powi(2);
