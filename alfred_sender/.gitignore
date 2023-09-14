@@ -1,8 +1,0 @@
-/*.d
-/*.o
-/gpsd/*.d
-/gpsd/*.o
-/gpsd/alfred-gpsd
-/vis/*.d
-/vis/*.o
-/vis/batadv-vis

@@ -1,1 +1,0 @@
-/usr/bin/g++  -g  -rdynamic CMakeFiles/alfredRX.dir/src/alfredRX.cpp.o CMakeFiles/alfredRX.dir/src/client.cpp.o  -o alfredRX  -lpthread 

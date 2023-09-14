@@ -1,3 +1,0 @@
-/home/jasshank/Documents/rpzero_scanner/build/CMakeFiles/rebuild_cache.dir
-/home/jasshank/Documents/rpzero_scanner/build/CMakeFiles/edit_cache.dir
-/home/jasshank/Documents/rpzero_scanner/build/CMakeFiles/alfredRX.dir
